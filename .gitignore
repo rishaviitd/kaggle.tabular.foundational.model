@@ -1,0 +1,22 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Competition data and generated predictions must stay local.
+data/
+artifacts/
+*.csv
+*.npz
+*.ckpt
+*.safetensors
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.parquet
