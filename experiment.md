@@ -27,9 +27,17 @@ grouped split for an independent estimate.
   license acceptance. This is not a performance result.
 - A Census coordinate experiment was discarded because competition rules
   prohibit external data. It is not part of the selected model.
-- Google's TabFM has not been evaluated yet; its large checkpoint download
-  was started. Its weights have a non-commercial license, so check
-  compatibility with the competition rules before using it for a submission.
+- Google's TabFM ran on Kaggle's two T4 GPUs using the local training split.
+  With 2 estimators, dev new-ZIP RMSE was **14.75**; with 16 estimators it
+  was **13.92**. Both are worse than TabICL's **11.30** and the selected
+  blend's **10.72** on new ZIPs, so TabFM did not improve the current model.
+  The 16-estimator run took about 3 minutes. Use FP32: FP16 produced NaN
+  predictions. Kaggle's MCP did not mount the competition data, so the run
+  read the identical training CSV from this repository. The private runs are
+  [2 estimators](https://www.kaggle.com/code/atomstack001/tabfm-housing-affordability-dev-evaluation-t4-fp32)
+  and [16 estimators](https://www.kaggle.com/code/atomstack001/tabfm-housing-dev-t4-16-estimators).
+  The pretrained weights have a non-commercial license; check compatibility
+  with competition rules before using them in a submission.
 
 ## Direction
 
