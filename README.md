@@ -18,9 +18,9 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Download the official files from the [competition data page](https://www.kaggle.com/competitions/predicting-housing-affordability-in-the-u-s/data)
-and place `train.csv`, `test.csv`, and `sample_submission.csv` in `data/`.
-These files and generated outputs are intentionally excluded from Git.
+The competition files and local splits are in `data/`. Generated outputs are
+excluded from Git. The original files are also available from the
+[competition data page](https://www.kaggle.com/competitions/predicting-housing-affordability-in-the-u-s/data).
 
 ## Local evaluation
 

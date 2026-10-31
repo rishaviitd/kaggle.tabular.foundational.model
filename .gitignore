@@ -8,10 +8,11 @@ venv/
 .pytest_cache/
 .ipynb_checkpoints/
 
-# Competition data and generated predictions must stay local.
-data/
+# Generated predictions and model files stay local.
 artifacts/
 *.csv
+!data/**/*.csv
+!data/*.csv
 *.npz
 *.ckpt
 *.safetensors
