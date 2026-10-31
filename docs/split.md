@@ -32,3 +32,15 @@ ZIPs classified as new still have no labels in the refit data.
 
 This is an approximation of the competition: only one earlier month is
 available for local training, whereas the final model can train on two.
+
+## Two-month grouped ZIP evaluation
+
+For a closer new-ZIP evaluation, use five-fold GroupKFold on ZIP codes. In
+each fold, train using both May and June rows from the training ZIP groups;
+hold out every row for the remaining ZIP groups and score their June targets.
+When aggregating to one row per ZIP, average the training features and target
+across May and June. Fit regional target encodings inside each fold, keeping
+all rows from a ZIP in the same fold. This evaluation tests unseen-ZIP
+generalization with the full two-month training history. Evaluate the seen-ZIP
+temporal regime separately by predicting June from May; combine the two RMSEs
+with the competition's 20/80 weights.

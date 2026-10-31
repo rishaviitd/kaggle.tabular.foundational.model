@@ -16,6 +16,31 @@ The best validation result is **1.2629 RMSE on seen ZIPs** and **10.9798 on
 new ZIPs**. Validation scores were inspected during development; use a fresh
 grouped split for an independent estimate.
 
+## Additional grouped evaluation on Kaggle (2026-11-01)
+
+To match the official unseen-ZIP setup, five-fold CV held out complete ZIP
+groups, averaged May/June features and targets to one training row per ZIP,
+and scored June targets for held-out ZIPs. Regional target encodings were
+cross-fitted by ZIP. Kaggle used two Tesla T4 GPUs.
+
+| Model | New-ZIP OOF RMSE | Finding |
+|---|---:|---|
+| LightGBM | 12.3293 | Same aggregated features and folds. |
+| TabICL, 4 estimators | 11.4865 | Best single model; a modest but consistent improvement over LightGBM across the five folds. |
+| 75% TabICL + 25% LightGBM | 11.3470 | Best OOF blend; blend weight was selected on these OOF predictions, so treat as a tuning estimate. |
+| CatBoost | 12.4382 | Did not improve on TabICL. |
+
+Using the measured May-to-June seen-ZIP persistence RMSE of **1.2524**, the
+blend's approximate weighted score is **9.3281**. This is not a Kaggle
+submission score. A single grouped split produced an overly optimistic 7.17
+TabICL RMSE; five-fold CV corrected it to 11.49, so do not use the single-split
+result. The private Kaggle run is [TabICL grouped ZIP evaluation](https://www.kaggle.com/code/atomstack001/tabicl-housing-grouped-zip-evaluation).
+
+The leaderboard's best public score is **3.905**, which we have not
+reproduced. The grouped CV still shows a large gap; the next work should focus
+on new-ZIP signal and validation-aligned feature design, not just changing
+foundation-model versions. No submission was made from these experiments.
+
 ## What did not help enough
 
 - CatBoost, extra trees, linear models, and a small neural network did not
