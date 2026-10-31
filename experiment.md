@@ -30,6 +30,10 @@ cross-fitted by ZIP. Kaggle used two Tesla T4 GPUs.
 | 75% TabICL + 25% LightGBM | 11.3470 | Best OOF blend; blend weight was selected on these OOF predictions, so treat as a tuning estimate. |
 | CatBoost | 12.4382 | Did not improve on TabICL. |
 
+Google TabFM was also rerun with 8 estimators, a 256-row context, one row per
+ZIP, and regional target encodings. It scored **13.147 RMSE** on one grouped
+holdout, so this improved feature setup did not make TabFM competitive.
+
 Using the measured May-to-June seen-ZIP persistence RMSE of **1.2524**, the
 blend's approximate weighted score is **9.3281**. This is not a Kaggle
 submission score. A single grouped split produced an overly optimistic 7.17
@@ -40,6 +44,10 @@ The leaderboard's best public score is **3.905**, which we have not
 reproduced. The grouped CV still shows a large gap; the next work should focus
 on new-ZIP signal and validation-aligned feature design, not just changing
 foundation-model versions. No submission was made from these experiments.
+The full-data TabICL/LightGBM candidate is saved locally at
+`artifacts/submission_tabicl_agg.csv`; its 8,534 keys and 0–100 prediction
+range were checked. It has not been submitted, so its leaderboard score is
+unknown. Kaggle run: [TabICL aggregated ZIP competition predictions](https://www.kaggle.com/code/atomstack001/tabicl-aggregated-zip-competition-predictions).
 
 ## What did not help enough
 
