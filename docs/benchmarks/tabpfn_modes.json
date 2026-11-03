@@ -1,0 +1,297 @@
+{
+  "device": "Tesla T4",
+  "scope": "in-process model inference; prepared features; excludes HTTP",
+  "modes": {
+    "auto_threads4": {
+      "fit_seconds": 32.20000857499997,
+      "first_prediction_seconds": 0.6733729590000053,
+      "batches": {
+        "1": {
+          "seconds": [
+            0.4768110250000177,
+            0.47684629899998754,
+            0.4808953239999596
+          ],
+          "median_seconds": 0.47684629899998754,
+          "rows_per_second": 2.0971117991208863,
+          "max_abs_diff_vs_submission": 0.026457272972528756
+        },
+        "32": {
+          "seconds": [
+            0.5201495439999917,
+            0.5217094189999898,
+            0.5305553970000005
+          ],
+          "median_seconds": 0.5217094189999898,
+          "rows_per_second": 61.3368262764691,
+          "max_abs_diff_vs_submission": 0.0186604330334319
+        },
+        "256": {
+          "seconds": [
+            1.3417596969999863,
+            1.3276560920000406,
+            1.3285726350000004
+          ],
+          "median_seconds": 1.3285726350000004,
+          "rows_per_second": 192.68799706987787,
+          "max_abs_diff_vs_submission": 0.04662105171699693
+        },
+        "1704": {
+          "seconds": [
+            7.153060775000029,
+            7.180083918000037,
+            7.259840877999977
+          ],
+          "median_seconds": 7.180083918000037,
+          "rows_per_second": 237.32313152053487,
+          "max_abs_diff_vs_submission": 0.053431935632268335
+        }
+      },
+      "peak_allocated_gib": 6.8820953369140625,
+      "peak_reserved_gib": 10.029296875
+    },
+    "auto_threads1": {
+      "fit_seconds": 31.81700131399998,
+      "first_prediction_seconds": 0.5102782210000214,
+      "batches": {
+        "1": {
+          "seconds": [
+            0.5096723149999889,
+            0.506801543999984,
+            0.5068914760000212
+          ],
+          "median_seconds": 0.5068914760000212,
+          "rows_per_second": 1.9728088700389947,
+          "max_abs_diff_vs_submission": 0.026457272972528756
+        },
+        "32": {
+          "seconds": [
+            0.5569976820000306,
+            0.5575037690000499,
+            0.55849903699999
+          ],
+          "median_seconds": 0.5575037690000499,
+          "rows_per_second": 57.39871509280708,
+          "max_abs_diff_vs_submission": 0.0186604330334319
+        },
+        "256": {
+          "seconds": [
+            1.4133279500000526,
+            1.4166633079999542,
+            1.4160399490000373
+          ],
+          "median_seconds": 1.4160399490000373,
+          "rows_per_second": 180.7858600181295,
+          "max_abs_diff_vs_submission": 0.04662105171699693
+        },
+        "1704": {
+          "seconds": [
+            7.666802142999984,
+            7.729828456999996,
+            7.795956563000004
+          ],
+          "median_seconds": 7.729828456999996,
+          "rows_per_second": 220.44473683719173,
+          "max_abs_diff_vs_submission": 0.053431935632268335
+        }
+      },
+      "peak_allocated_gib": 6.882358551025391,
+      "peak_reserved_gib": 10.029296875
+    },
+    "auto_threads8": {
+      "fit_seconds": 33.40815749899997,
+      "first_prediction_seconds": 0.5258879190000698,
+      "batches": {
+        "1": {
+          "seconds": [
+            0.5231311750000032,
+            0.5251175640000838,
+            0.5221306260000347
+          ],
+          "median_seconds": 0.5231311750000032,
+          "rows_per_second": 1.911566444114125,
+          "max_abs_diff_vs_submission": 0.026457272972528756
+        },
+        "32": {
+          "seconds": [
+            0.5701711650000334,
+            0.5712570669999195,
+            0.5697182259999636
+          ],
+          "median_seconds": 0.5701711650000334,
+          "rows_per_second": 56.12349758163958,
+          "max_abs_diff_vs_submission": 0.0186604330334319
+        },
+        "256": {
+          "seconds": [
+            1.4417088599999488,
+            1.4472990080000727,
+            1.4377646739999363
+          ],
+          "median_seconds": 1.4417088599999488,
+          "rows_per_second": 177.56705747095782,
+          "max_abs_diff_vs_submission": 0.04662105171699693
+        },
+        "1704": {
+          "seconds": [
+            7.704473409999991,
+            7.704347207000069,
+            7.702526008999939
+          ],
+          "median_seconds": 7.704347207000069,
+          "rows_per_second": 221.17383267095855,
+          "max_abs_diff_vs_submission": 0.053431935632268335
+        }
+      },
+      "peak_allocated_gib": 6.882358551025391,
+      "peak_reserved_gib": 10.029296875
+    },
+    "float16_threads4": {
+      "error": "ValueError: Found NaNs in the encoded x and y. Make sure to use a NaN-handling encoder."
+    },
+    "float32_threads4": {
+      "fit_seconds": 128.28895163899995,
+      "first_prediction_seconds": 1.2747725259999925,
+      "batches": {
+        "1": {
+          "seconds": [
+            1.2727359259999957,
+            1.2736148379999577,
+            1.2723876359999622
+          ],
+          "median_seconds": 1.2727359259999957,
+          "rows_per_second": 0.7857089436791803,
+          "max_abs_diff_vs_submission": 0.0030771963691975657
+        },
+        "32": {
+          "seconds": [
+            1.4273388000000296,
+            1.4328026819999877,
+            1.420536249999941
+          ],
+          "median_seconds": 1.4273388000000296,
+          "rows_per_second": 22.419344307041424,
+          "max_abs_diff_vs_submission": 0.02898824154079449
+        },
+        "256": {
+          "seconds": [
+            4.8045802970000295,
+            4.804139196000051,
+            4.82225092300007
+          ],
+          "median_seconds": 4.8045802970000295,
+          "rows_per_second": 53.28248966092749,
+          "max_abs_diff_vs_submission": 0.07611226388814885
+        },
+        "1704": {
+          "seconds": [
+            29.037539229000004,
+            28.901796232000038,
+            28.947815981999952
+          ],
+          "median_seconds": 28.947815981999952,
+          "rows_per_second": 58.864544429174366,
+          "max_abs_diff_vs_submission": 0.10294358415913507
+        }
+      },
+      "peak_allocated_gib": 10.593262672424316,
+      "peak_reserved_gib": 10.990234375
+    },
+    "memory_saving_off": {
+      "fit_seconds": 33.33084754099991,
+      "first_prediction_seconds": 0.5343843790000165,
+      "batches": {
+        "1": {
+          "seconds": [
+            0.5303350580001052,
+            0.5286958530000447,
+            0.5329699910000727
+          ],
+          "median_seconds": 0.5303350580001052,
+          "rows_per_second": 1.8856004047158461,
+          "max_abs_diff_vs_submission": 0.026457272972528756
+        },
+        "32": {
+          "seconds": [
+            0.5833868689999235,
+            0.5839036849999957,
+            0.5743643209999618
+          ],
+          "median_seconds": 0.5833868689999235,
+          "rows_per_second": 54.85210878135859,
+          "max_abs_diff_vs_submission": 0.0186604330334319
+        },
+        "256": {
+          "seconds": [
+            1.457934549000015,
+            1.4513648580000336,
+            1.4547622420000152
+          ],
+          "median_seconds": 1.4547622420000152,
+          "rows_per_second": 175.9737726269619,
+          "max_abs_diff_vs_submission": 0.04662105171699693
+        },
+        "1704": {
+          "seconds": [
+            7.743138162000037,
+            7.745385413999998,
+            7.731175349000068
+          ],
+          "median_seconds": 7.743138162000037,
+          "rows_per_second": 220.0658136726131,
+          "max_abs_diff_vs_submission": 0.053431935632268335
+        }
+      },
+      "peak_allocated_gib": 6.882358551025391,
+      "peak_reserved_gib": 10.029296875
+    },
+    "memory_saving_on": {
+      "fit_seconds": 38.314066630999946,
+      "first_prediction_seconds": 0.5410066090000782,
+      "batches": {
+        "1": {
+          "seconds": [
+            0.5410393749999685,
+            0.5354800180000439,
+            0.5326893399999335
+          ],
+          "median_seconds": 0.5354800180000439,
+          "rows_per_second": 1.8674833166228775,
+          "max_abs_diff_vs_submission": 0.015167151453688632
+        },
+        "32": {
+          "seconds": [
+            0.6150054910000335,
+            0.6173479420000376,
+            0.6189553949999436
+          ],
+          "median_seconds": 0.6173479420000376,
+          "rows_per_second": 51.83462650953172,
+          "max_abs_diff_vs_submission": 0.04078387822944762
+        },
+        "256": {
+          "seconds": [
+            1.4829143160000058,
+            1.4824152789999516,
+            1.4706586349999498
+          ],
+          "median_seconds": 1.4824152789999516,
+          "rows_per_second": 172.69115046675685,
+          "max_abs_diff_vs_submission": 0.03392719260415333
+        },
+        "1704": {
+          "seconds": [
+            7.847621532999938,
+            7.852882217000001,
+            7.842127133999952
+          ],
+          "median_seconds": 7.847621532999938,
+          "rows_per_second": 217.13585356206724,
+          "max_abs_diff_vs_submission": 0.05324703243258
+        }
+      },
+      "peak_allocated_gib": 5.355379581451416,
+      "peak_reserved_gib": 5.671875
+    }
+  }
+}

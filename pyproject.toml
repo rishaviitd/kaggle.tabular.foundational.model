@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "housing-affordability"
+version = "0.1.0"
+description = "ZIP-level housing affordability research and TabPFN inference"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "tabpfn==9.2.0",
+    "numpy",
+    "pandas",
+    "scikit-learn",
+    "torch",
+    "huggingface-hub",
+]
+
+[project.optional-dependencies]
+experiments = ["tabicl==2.2.0"]
+batching = ["tabctx==0.17.1"]
+
+[project.scripts]
+housing-affordability-server = "housing_affordability.server:main"
+
+[tool.setuptools.packages.find]
+include = ["housing_affordability*"]

@@ -1,0 +1,105 @@
+{
+  "device": "Tesla T4",
+  "torch": "2.11.0+cu130",
+  "model": "TabPFN v2 regressor, 4 estimators, seed 42",
+  "modes": {
+    "preprocessors_only": {
+      "model_load_seconds": 1.6290686389999678,
+      "fit_seconds": 4.395776329,
+      "first_prediction_seconds": 29.465597262000017,
+      "batches": {
+        "1": {
+          "seconds": [
+            28.980173078999997,
+            30.65222295199999,
+            32.703804048999984
+          ],
+          "median_seconds": 30.65222295199999,
+          "rows_per_second": 0.032624061281491895
+        },
+        "32": {
+          "seconds": [
+            32.02642024200003,
+            31.965034005000007,
+            32.20093822699994
+          ],
+          "median_seconds": 32.02642024200003,
+          "rows_per_second": 0.9991750485442834
+        },
+        "256": {
+          "seconds": [
+            32.978151088000004,
+            33.06201480599998,
+            33.11790392799992
+          ],
+          "median_seconds": 33.06201480599998,
+          "rows_per_second": 7.743024782432255
+        },
+        "1704": {
+          "seconds": [
+            40.11912999499998,
+            39.81984993200001,
+            39.80372102699994
+          ],
+          "median_seconds": 39.81984993200001,
+          "rows_per_second": 42.79272782066997
+        }
+      },
+      "peak_allocated_gib": 4.407753944396973,
+      "peak_reserved_gib": 13.927734375,
+      "max_abs_difference_vs_reference": 1.4210854715202004e-14
+    },
+    "kv_cache": {
+      "model_load_seconds": 0.05290910600001553,
+      "fit_seconds": 35.32273274600004,
+      "first_prediction_seconds": 0.5697852250000324,
+      "batches": {
+        "1": {
+          "seconds": [
+            0.5719519109999283,
+            0.5664380980000487,
+            0.5690192069999966
+          ],
+          "median_seconds": 0.5690192069999966,
+          "rows_per_second": 1.757409921665449
+        },
+        "32": {
+          "seconds": [
+            0.6252959039999268,
+            0.6215840109999817,
+            0.6178608970000141
+          ],
+          "median_seconds": 0.6215840109999817,
+          "rows_per_second": 51.48137570096046
+        },
+        "256": {
+          "seconds": [
+            1.5355473749999646,
+            1.5472072979999894,
+            1.5408180400000901
+          ],
+          "median_seconds": 1.5408180400000901,
+          "rows_per_second": 166.1455106016185
+        },
+        "1704": {
+          "seconds": [
+            8.23670250300006,
+            8.217749653000055,
+            8.213468025999987
+          ],
+          "median_seconds": 8.217749653000055,
+          "rows_per_second": 207.3560368656303
+        }
+      },
+      "peak_allocated_gib": 6.882359981536865,
+      "peak_reserved_gib": 10.029296875,
+      "max_abs_difference_vs_reference": 0.053431935632268335
+    }
+  },
+  "external_load_seconds": 6.646567280999989,
+  "full_feature_preparation_seconds": 0.36407229999997526,
+  "training_rows": 13660,
+  "training_zips": 6830,
+  "query_rows": 1704,
+  "features": 106
+}

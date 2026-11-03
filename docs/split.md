@@ -44,3 +44,15 @@ all rows from a ZIP in the same fold. This evaluation tests unseen-ZIP
 generalization with the full two-month training history. Evaluate the seen-ZIP
 temporal regime separately by predicting June from May; combine the two RMSEs
 with the competition's 20/80 weights.
+
+## Retained evaluation and submission workflow
+
+Run `python experiments/external_acs/evaluate_realtor_foundation.py --seed 42`
+for the retained five-fold comparison. The default seed can be changed with
+`--seed`; 42 and 137 reuse the same labeled ZIPs and are not independent tests.
+
+The full-data submission scripts fit on all 13,660 May/June rows, aggregated
+to 6,830 ZIPs. Seen ZIPs use the latest known target. July targets are unknown,
+so the local weighted score uses May-to-June persistence as a proxy. The
+validation sets have been inspected during model selection and are not fresh
+holdouts.

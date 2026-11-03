@@ -1,0 +1,65 @@
+{
+  "device": "Tesla T4",
+  "tabctx_commit": "6397d5caad52c3705c664336b77f3fe39f0cbfd0",
+  "scope": "in-process tabctx engine/coalescer; excludes HTTP, network and feature preparation",
+  "default_a100_estimate_gib": 20.597801372408867,
+  "default_a100_admits_on_t4": false,
+  "adapter": "v2 checkpoint, four estimators, restore original categorical schema; fixed test-only T4 memory estimate",
+  "fit_seconds": 34.62251256100001,
+  "max_abs_difference_vs_submission": 0.053431935632268335,
+  "mean_abs_difference_vs_submission": 0.005319912873771574,
+  "peak_allocated_gib": 6.8820953369140625,
+  "peak_reserved_gib": 10.02734375,
+  "runs": {
+    "serial": {
+      "1": {
+        "seconds": 17.80719968400001,
+        "requests_per_second": 1.7970259539882847,
+        "latency_median": 0.5555519469999979,
+        "latency_p95": 0.5700089064999844,
+        "max_abs_difference_vs_batch": 0.016787174900535717
+      },
+      "8": {
+        "seconds": 19.19612086500001,
+        "requests_per_second": 1.6670034651816088,
+        "latency_median": 4.655840648000009,
+        "latency_p95": 12.978458115299981,
+        "max_abs_difference_vs_batch": 0.016787174900535717
+      },
+      "32": {
+        "seconds": 19.852923144999977,
+        "requests_per_second": 1.6118533158206128,
+        "latency_median": 10.342516866500006,
+        "latency_p95": 18.89864426045,
+        "max_abs_difference_vs_batch": 0.016787174900535717
+      },
+      "engine_calls": 96,
+      "batched_requests": 0
+    },
+    "coalesced_5ms": {
+      "1": {
+        "seconds": 18.882897628999956,
+        "requests_per_second": 1.6946551651508757,
+        "latency_median": 0.5903551854999876,
+        "latency_p95": 0.6024060876500158,
+        "max_abs_difference_vs_batch": 0.016787174900535717
+      },
+      "8": {
+        "seconds": 2.375313673999983,
+        "requests_per_second": 13.471904932081078,
+        "latency_median": 0.5919166849999726,
+        "latency_p95": 0.5980944669500048,
+        "max_abs_difference_vs_batch": 0.036759265006779174
+      },
+      "32": {
+        "seconds": 0.6468310739999765,
+        "requests_per_second": 49.47195842357005,
+        "latency_median": 0.6390714505000119,
+        "latency_p95": 0.6392179431999978,
+        "max_abs_difference_vs_batch": 3.1806743066908894e-05
+      },
+      "engine_calls": 37,
+      "batched_requests": 96
+    }
+  }
+}

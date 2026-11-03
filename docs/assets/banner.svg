@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="230" viewBox="0 0 1200 230" role="img" aria-labelledby="title desc">
+  <title id="title">Housing Affordability</title>
+  <desc id="desc">Tabular foundation models for housing affordability research</desc>
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1730"/><stop offset="1" stop-color="#173d50"/></linearGradient></defs>
+  <rect width="1200" height="230" rx="20" fill="url(#bg)"/>
+  <g transform="translate(55 46)" fill="none" stroke="#63e6be" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 65 67 14l59 51M23 57v64h88V57M54 121V83h26v38"/><circle cx="8" cy="65" r="5" fill="#63e6be"/><circle cx="126" cy="65" r="5" fill="#63e6be"/></g>
+  <text x="220" y="103" fill="#f4f8fb" font-family="Arial, sans-serif" font-size="49" font-weight="700">Housing Affordability</text>
+  <text x="223" y="146" fill="#aac5d4" font-family="Arial, sans-serif" font-size="23">Tabular foundation models · inference · interpretation</text>
+  <path d="M944 182h195M1000 58l40 35 32-18 42 32" stroke="#63e6be" stroke-opacity=".4" stroke-width="3" fill="none"/><g fill="#63e6be" fill-opacity=".7"><circle cx="1000" cy="58" r="5"/><circle cx="1040" cy="93" r="5"/><circle cx="1072" cy="75" r="5"/><circle cx="1114" cy="107" r="5"/></g>
+</svg>

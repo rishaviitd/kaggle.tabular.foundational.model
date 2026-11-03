@@ -1,0 +1,7 @@
+{
+  "heldout_zip_rows": 1366,
+  "baseline_new_zip_rmse": 4.6219981129688765,
+  "cached_new_zip_rmse": 4.622991913114183,
+  "mean_absolute_prediction_difference": 0.008218125339065996,
+  "max_absolute_prediction_difference": 0.0992189749414365
+}

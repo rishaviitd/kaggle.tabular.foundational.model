@@ -7,12 +7,16 @@ venv/
 .env.*
 .pytest_cache/
 .ipynb_checkpoints/
+*.egg-info/
+build/
+dist/
 
 # Generated predictions and model files stay local.
 artifacts/
 *.csv
 !data/**/*.csv
 !data/*.csv
+!docs/benchmarks/*.csv
 *.npz
 *.ckpt
 *.safetensors

@@ -1,0 +1,48 @@
+{
+  "device": "Tesla T4",
+  "startup_including_data_and_fit_seconds": 14.290571984999985,
+  "first_unseen_request_seconds": 29.97286446999999,
+  "batches": {
+    "1": {
+      "seconds": [
+        29.72327621300002,
+        32.180041114999995,
+        32.14334984300001
+      ],
+      "median_seconds": 32.14334984300001,
+      "rows_per_second": 0.031110634233344356
+    },
+    "32": {
+      "seconds": [
+        31.43225198199997,
+        32.025546074999966,
+        31.944425346999992
+      ],
+      "median_seconds": 31.944425346999992,
+      "rows_per_second": 1.001739729307894
+    },
+    "256": {
+      "seconds": [
+        32.66668596699992,
+        32.58356495800001,
+        32.62635843399994
+      ],
+      "median_seconds": 32.62635843399994,
+      "rows_per_second": 7.846416587308203
+    },
+    "1704": {
+      "seconds": [
+        39.69956755299995,
+        39.63495574399997,
+        39.569958929999984
+      ],
+      "median_seconds": 39.63495574399997,
+      "rows_per_second": 42.99235278591059
+    }
+  },
+  "seen_request_seconds": 0.00195752199999788,
+  "peak_allocated_gib": 4.407753944396973,
+  "peak_reserved_gib": 13.927734375,
+  "max_abs_difference_vs_submission": 1.4210854715202004e-14,
+  "scope": "in-process HousingService.predict, excludes HTTP and network transport"
+}
