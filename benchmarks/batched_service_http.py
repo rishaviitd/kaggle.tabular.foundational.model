@@ -89,6 +89,8 @@ def main():
             server.shutdown()
             server.server_close()
             thread.join(timeout=5)
+            if isinstance(wrapped, QueuedHousingService):
+                wrapped.close()
     out = ROOT/'artifacts/serving/queued_http.json'
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=2)+'\n')

@@ -51,13 +51,23 @@ cache; check the measured T4 memory and prediction agreement before using it.
 For the tested setup, `python -m housing_affordability.server --cache` enables the faster
 configuration. The default remains the exact submission-equivalent path.
 
-For experimental concurrent request coalescing, add `--batch-window-ms 80`
-to the cached server command. A single worker collects compatible requests,
+For the measured optimized path, use:
+
+```sh
+housing-affordability-server --cache --optimize --batch-window-ms 5
+```
+
+A single worker collects compatible requests,
 including arrivals while the GPU is busy. GPU access is serialized; this is
 request micro-batching rather than token-level continuous batching. The threaded
 research server has no backpressure or production admission controls. To use
 the older tabctx coalescer, install `pip install -e '.[batching]'` on Python
 3.12 or newer and add `--batch-strategy tabctx`.
+
+Queued stdlib serving uses persistent HTTP/1.1 connections and TCP_NODELAY.
+An optional ASGI transport is available with `pip install -e '.[serving]'`
+and `--http-backend asgi`. It was tested but did not beat stdlib overall in
+the final workload; the command above is the recommended measured configuration.
 
 ## Single-T4 measurements
 
@@ -173,6 +183,120 @@ not establish sustained performance or a maximum. The two windows differ,
 and the longer window can increase latency at low traffic. Across the run,
 predictions differed from the uncached submission by at most **0.0467
 percentage points**; this is not a labeled accuracy evaluation.
+
+## XGBoost CPU comparison
+
+The [same-machine benchmark](https://www.kaggle.com/code/atomstack001/housing-xgboost-cpu-vs-tabpfn-t4)
+compared cached TabPFN on a T4 with a 1,000-tree XGBoost model on four CPU
+threads, using identical training data, feature construction, and unseen-ZIP
+requests. Both HTTP services used the 80 ms queue. Results are averages of two
+short localhost bursts, not sustained capacity guarantees:
+
+| Concurrent clients | TabPFN requests/s | XGBoost requests/s |
+| ---: | ---: | ---: |
+| 1 | 1.36 | 7.42 |
+| 32 | 39.74 | 191.37 |
+| 128 | 99.85 | 484.17 |
+| 256 | 94.30 | 415.96 |
+
+At 128 clients, mean p95 HTTP latency was 1.25 s for TabPFN and 0.23 s for
+XGBoost. For a single request, without waiting to batch XGBoost's median HTTP
+latency was 0.055 s; TabPFN with an 80 ms window was 0.734 s. Model-only
+timings for 1,704 prepared rows were 8.06 s and 0.0238 s respectively; these
+exclude shared feature preparation and HTTP but include XGBoost encoding.
+
+On the same 1,366 held-out ZIPs, RMSE against ZIP-average targets was 4.953
+for TabPFN and 5.959 for this XGBoost configuration. This is one fold and is
+not the competition's weighted metric. The benchmark did not measure monetary
+cost. See `benchmarks/compare_xgboost.py` and
+[`docs/benchmarks/xgboost_comparison.json`](benchmarks/xgboost_comparison.json).
+
+## Inference optimization experiments
+
+The [T4 attention profile](https://www.kaggle.com/code/atomstack001/housing-t4-attention-profile)
+identified repeated K/V head copies and attention itself as the main GPU cost.
+`--cache --optimize` keeps the checkpoint, all four estimators, full training
+context and features. It folds shared-key query heads into the query sequence
+and reuses the fitted input schema. Regional summaries are also fitted once.
+The implementation changes only this fitted model, without patching TabPFN
+module globals. It targets the pinned `tabpfn==9.2.0` v2 architecture.
+
+In the profile, model-only single-row latency fell from 0.494 to 0.160 seconds
+with identical predictions in the tested batches. The separate
+[typed-input experiment](https://www.kaggle.com/code/atomstack001/housing-t4-cpu-gpu-overlap)
+reduced a roughly 0.146-second path to 0.116 seconds and preserved the cleaned
+features and predictions across all 1,704 test ZIPs. These are separate warmed
+measurements, not a combined HTTP latency claim.
+
+The [HTTP validation](https://www.kaggle.com/code/atomstack001/housing-t4-optimized-http)
+of shared-key attention and cached regional summaries reduced median serial
+request latency from about 0.667 to 0.192 seconds with a shorter queue window.
+Both cached models scored 4.622991913 on 1,366 held-out June ZIPs, with zero
+prediction difference. That run used three trials and four request waves at
+each concurrent load, unlike the earlier single-burst measurements.
+
+Experiments retained for reproduction, but excluded from the default model:
+
+- Forced float16 failed with NaNs; float32 was much slower.
+- A custom Triton attention prototype was slower than PyTorch. Eight tile
+  configurations on representative shapes also failed to beat PyTorch; some
+  exceeded T4 shared-memory limits. See `kernel_tuning.json`.
+- Compiled blocks initially failed because CUDA graph outputs were overwritten.
+  Cloning outputs fixed the exception, but the tested configuration remained
+  slower and changed predictions slightly. See `compiled_blocks_safe.json`.
+- Removing diagnostic GPU barriers gave no clear gain. It remains an experiment
+  in `benchmarks/execution.py`.
+- Combining compatible estimator caches helped single-row inference modestly,
+  but slowed larger batches and changed some predictions; it is not enabled.
+- A naive input-encoding shortcut mishandled missing ZIP prefixes. The corrected
+  codec preserves the fitted cleaner's distinction between unknown and missing
+  categories; tests cover this case explicitly.
+
+Raw results and profiles are in [`docs/benchmarks/`](benchmarks/). No prediction
+memoization or training-context subsampling is used by these optimizations.
+
+## Final single-T4 comparison
+
+The [final Kaggle run](https://www.kaggle.com/code/atomstack001/housing-t4-final-inference-comparison)
+used one Tesla T4 and an Intel Xeon CPU at 2.00 GHz, with four CPU threads.
+It tested the shipped model wrapper and HTTP handlers, using aiohttp clients
+on the same host. Each concurrency trial used four request waves; the serial
+trial used 16 requests. Every reported value below averages three trials.
+All requests target unseen ZIPs and run inference; no prediction memoization
+or seen-ZIP shortcuts are included.
+
+| Configuration | Single-client median latency | Requests/s at 128 clients | Requests/s at 256 clients |
+| --- | ---: | ---: | ---: |
+| Previous cached TabPFN, stdlib, 80 ms window | 669 ms | 100.1 | 110.8 |
+| Optimized TabPFN, persistent stdlib, 5 ms window | **148 ms** | 136.6 | **156.2** |
+| Optimized TabPFN, ASGI, 80 ms window | 282 ms | 149.6 | 151.2 |
+| CPU XGBoost, ASGI, 0.1 ms window | 78 ms | 328.2 | 479.4 |
+| CPU XGBoost, ASGI, 80 ms window | 159 ms | 625.4 | 730.8 |
+
+The recommended TabPFN configuration reduced single-client latency about
+**4.5x** and increased throughput at 256 clients about **41%**. XGBoost remains
+faster. The CPU settings that maximize throughput add waiting time at low
+traffic; they are not its lowest-latency settings. Both models use the same
+raw engineered features; TabPFN also performs its fitted ensemble encoding.
+These finite localhost tests are not maximum-capacity or sustained-load claims,
+and they do not measure dollar cost.
+
+The optimized TabPFN predictions were identical to the cached baseline across
+all 1,704 unseen test ZIPs. Accuracy checks held out entire ZIPs and evaluated
+June targets, separately for seeds 42 and 137:
+
+| ZIP split seed | Rows | Cached baseline RMSE | Optimized RMSE | CPU XGBoost RMSE |
+| ---: | ---: | ---: | ---: | ---: |
+| 42 | 1,366 | 4.622992 | 4.622992 | 5.736962 |
+| 137 | 1,366 | 5.116784 | 5.116784 | 5.754148 |
+
+The 32-row sample evaluated as individual one-row model calls also matched
+exactly on each split. These are new-ZIP RMSE checks, not the competition's
+weighted metric. Cached-vs-uncached differences described earlier still apply.
+Install benchmark dependencies with `pip install -e '.[serving,benchmarks]'`
+and reproduce with `python -m benchmarks.final_inference_comparison` after
+preparing the data. Raw trials are saved in
+[`final_inference_comparison.json`](benchmarks/final_inference_comparison.json).
 
 ## Interpretability
 

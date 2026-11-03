@@ -1,0 +1,46 @@
+{
+  "gpu": "Tesla T4",
+  "modes": {
+    "shared_key_eager": {
+      "1": {
+        "first_seconds": 0.14543245499999102,
+        "seconds": [
+          0.14266146200003504,
+          0.13848416199999747,
+          0.13425958700003093
+        ],
+        "max_abs_difference": 0
+      },
+      "32": {
+        "first_seconds": 0.21799024400002054,
+        "seconds": [
+          0.21521847799999705,
+          0.2148133580000149,
+          0.21203594000002113
+        ],
+        "max_abs_difference": 0
+      },
+      "128": {
+        "first_seconds": 0.6031254910000143,
+        "seconds": [
+          0.6021192389999896,
+          0.5969276229999991,
+          0.6034017800000129
+        ],
+        "max_abs_difference": 0
+      },
+      "256": {
+        "first_seconds": 1.12445273000003,
+        "seconds": [
+          1.1244417320000366,
+          1.1422329330000025,
+          1.1285387190000051
+        ],
+        "max_abs_difference": 0
+      }
+    },
+    "shared_key_compiled": {
+      "error": "RuntimeError('Error: accessing tensor output of CUDAGraphs that has been overwritten by a subsequent run. Stack trace: File \"/usr/local/lib/python3.13/dist-packages/tabpfn/architectures/tabpfn_v2.py\", line 440, in forward\\n    x_BRCE = chunked_evaluate_maybe_inplace(\\n  File \"/usr/local/lib/python3.13/dist-packages/tabpfn/architectures/shared/chunked_evaluate.py\", line 49, in chunked_evaluate_maybe_inplace\\n    result = f(x.flatten(0, batch_dims - 1), *args, **kwargs).view(x.shape). To prevent overwriting, clone the tensor outside of torch.compile() or call torch.compiler.cudagraph_mark_step_begin() before each model invocation.')"
+    }
+  }
+}

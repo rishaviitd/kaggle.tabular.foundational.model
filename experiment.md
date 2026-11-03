@@ -417,3 +417,37 @@ all three models on all 13,660 labeled rows, Kaggle submission **57934513**
 scored **4.012** publicly, versus **3.919** for the previous submission. The
 submission uses external ACS, Zillow and Realtor.com Economic Research data,
 which was disclosed in its description; the local gain is a tuning estimate.
+
+### T4 inference optimization and CPU XGBoost comparison
+
+The final same-host test used one Tesla T4, a 2.00 GHz Intel Xeon and four CPU
+threads. Shared-key attention avoids repeating the training cache for query
+heads. Fitted-schema input encoding avoids repeated dtype inference; regional
+summaries are also cached. Persistent HTTP connections, TCP_NODELAY and a
+5 ms request queue complete the selected stdlib serving configuration.
+
+Across three trials, single-client median HTTP latency fell from **669 ms to
+148 ms**. At 256 clients, throughput rose from **110.8 to 156.2 requests/s**.
+The same-host XGBoost ASGI configurations measured **78 ms** at a 0.1 ms window
+and **730.8 requests/s** at 256 clients with an 80 ms window. The latter is a
+throughput setting, not its lowest-latency configuration. All concurrent trials
+used four waves of unseen-ZIP requests; these are finite localhost benchmarks.
+
+The optimized and baseline cached TabPFN predictions matched exactly on 1,704
+test ZIPs and two 1,366-ZIP held-out June splits. RMSE remained **4.622992 /
+5.116784** for seeds 42 / 137. Matched XGBoost scored **5.736962 / 5.754148**.
+These are new-ZIP RMSE checks, distinct from the earlier weighted proxies.
+
+What did not help: the tested Triton kernels were slower or exceeded shared
+memory; compiled blocks were slower even after fixing CUDA graph output
+reuse; removing diagnostic synchronization had no clear benefit. Pairing
+compatible estimator caches improved single-row latency modestly but slowed
+larger batches. None is enabled in the selected model. A naive encoding
+shortcut mishandled missing ZIP prefixes; the shipped codec reproduces the
+fitted cleaner's missing/unknown semantics and has explicit regression tests.
+
+The direction remains tabular foundation models. The selected optimization
+retains the four estimators, full training context and existing features.
+Reproduce with `python -m benchmarks.final_inference_comparison`; see
+[serving details](docs/serving.md#final-single-t4-comparison) and
+[raw trials](docs/benchmarks/final_inference_comparison.json).

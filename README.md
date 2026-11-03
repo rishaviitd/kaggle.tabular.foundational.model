@@ -37,8 +37,17 @@ in `data/`, then download the external feature sources using the commands in
 housing-affordability-server --cache
 ```
 
-For experimental request batching, run
-`housing-affordability-server --cache --batch-window-ms 80`.
+For the optimized single-T4 path, run:
+
+```bash
+housing-affordability-server --cache --optimize --batch-window-ms 5
+```
+
+On the same Kaggle host, this reduced single-request HTTP latency from
+**669 ms to 148 ms** and increased throughput at 256 concurrent clients from
+**111 to 156 requests/second**. Predictions matched the cached baseline on
+all 1,704 test ZIPs and two held-out splits. See
+[measured settings and XGBoost comparison](docs/serving.md#final-single-t4-comparison).
 
 The server accepts `POST /predict` requests containing ZIP-level records. It
 uses the latest known target for seen ZIPs and the fitted model for unseen ZIPs.
@@ -52,12 +61,12 @@ import pandas as pd
 from housing_affordability.server import HousingService
 
 history = pd.read_csv("data/train.csv", dtype={"Zip": str})
-service = HousingService(history, cache=True)
+service = HousingService(history, cache=True, optimize=True)
 records = pd.read_csv("data/test.csv", dtype={"Zip": str}).head(1).to_dict("records")
 predictions = service.predict(records)
 ```
 
-On a single T4, the cached service measured **0.53 seconds for one unseen ZIP**
+An earlier single-T4 cached run measured **0.53 seconds for one unseen ZIP**
 and **7.37 seconds for 1,704 ZIPs** in process. These timings exclude HTTP and
 network overhead and use three warmed measurements. The cache changes
 predictions slightly; full benchmarks are in [docs/benchmarks](docs/benchmarks/).

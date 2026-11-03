@@ -1,0 +1,101 @@
+{
+  "gpu": "Tesla T4",
+  "modes": {
+    "baseline": {
+      "1": {
+        "seconds": [
+          0.49307951700006925,
+          0.49364664999995966,
+          0.49972044099990853
+        ],
+        "median_seconds": 0.49364664999995966,
+        "max_abs_difference": 0
+      },
+      "32": {
+        "seconds": [
+          0.542162908000023,
+          0.5374817110000549,
+          0.5384806339999386
+        ],
+        "median_seconds": 0.5384806339999386,
+        "max_abs_difference": 0
+      },
+      "128": {
+        "seconds": [
+          0.8506825320000644,
+          0.8551036250000834,
+          0.8559318899999653
+        ],
+        "median_seconds": 0.8551036250000834,
+        "max_abs_difference": 0
+      },
+      "256": {
+        "seconds": [
+          1.376981225999998,
+          1.374624234999942,
+          1.3761284070000102
+        ],
+        "median_seconds": 1.3761284070000102,
+        "max_abs_difference": 0
+      },
+      "1704": {
+        "seconds": [
+          7.509116897000013,
+          7.57288681600005,
+          7.650074849999896
+        ],
+        "median_seconds": 7.57288681600005,
+        "max_abs_difference": 0
+      }
+    },
+    "shared_key": {
+      "1": {
+        "seconds": [
+          0.15968183899997257,
+          0.15847648900000877,
+          0.1843444690000524
+        ],
+        "median_seconds": 0.15968183899997257,
+        "max_abs_difference": 0
+      },
+      "32": {
+        "seconds": [
+          0.22966265100001237,
+          0.22575134900000648,
+          0.22676885399994262
+        ],
+        "median_seconds": 0.22676885399994262,
+        "max_abs_difference": 0
+      },
+      "128": {
+        "seconds": [
+          0.6343354179999778,
+          0.6376752619999024,
+          0.6446822249999968
+        ],
+        "median_seconds": 0.6376752619999024,
+        "max_abs_difference": 0
+      },
+      "256": {
+        "seconds": [
+          1.1952312820000088,
+          1.1886130030000004,
+          1.199773843999992
+        ],
+        "median_seconds": 1.1952312820000088,
+        "max_abs_difference": 0
+      },
+      "1704": {
+        "seconds": [
+          7.609018018000029,
+          7.706833345000064,
+          7.789438486999984
+        ],
+        "median_seconds": 7.706833345000064,
+        "max_abs_difference": 0
+      }
+    }
+  },
+  "cpu_profile": "         241817 function calls (236144 primitive calls) in 0.590 seconds\n\n   Ordered by: cumulative time\n   List reduced from 1349 to 35 due to restriction <35>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n      3/2    0.000    0.000    0.739    0.369 /usr/local/lib/python3.13/dist-packages/tabpfn/regressor.py:2174(_iter_forward_executor)\n        5    0.000    0.000    0.454    0.091 /usr/local/lib/python3.13/dist-packages/tabpfn/inference.py:1327(iter_outputs)\n        5    0.000    0.000    0.454    0.091 /usr/local/lib/python3.13/dist-packages/tabpfn/inference.py:258(_yield_in_member_order)\n        5    0.000    0.000    0.454    0.091 /usr/local/lib/python3.13/dist-packages/tabpfn/inference.py:69(__next__)\n        4    0.000    0.000    0.317    0.079 /usr/local/lib/python3.13/dist-packages/torch/cuda/__init__.py:1152(synchronize)\n        4    0.317    0.079    0.317    0.079 {built-in method torch._C._cuda_synchronize}\n      2/1    0.000    0.000    0.289    0.289 /usr/local/lib/python3.13/dist-packages/tqdm/std.py:1160(__iter__)\n   260/22    0.000    0.000    0.140    0.006 {built-in method builtins.next}\n        5    0.000    0.000    0.136    0.027 /usr/local/lib/python3.13/dist-packages/tabpfn/parallel_execute.py:57(parallel_execute)\n        5    0.000    0.000    0.136    0.027 /usr/local/lib/python3.13/dist-packages/tabpfn/parallel_execute.py:93(_execute_in_current_thread)\n        4    0.000    0.000    0.136    0.034 /usr/local/lib/python3.13/dist-packages/tabpfn/inference.py:1385(_call_model)\n        4    0.000    0.000    0.136    0.034 /usr/local/lib/python3.13/dist-packages/tabpfn/inference.py:1458(run)\n        1    0.000    0.000    0.119    0.119 /usr/local/lib/python3.13/dist-packages/tabpfn/preprocessing/clean.py:133(clean_data_transform)\n        4    0.000    0.000    0.093    0.023 /usr/local/lib/python3.13/dist-packages/torch/autograd/grad_mode.py:293(__exit__)\n    796/4    0.002    0.000    0.090    0.023 /usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py:1775(_wrapped_call_impl)\n    796/4    0.003    0.000    0.090    0.023 /usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py:1783(_call_impl)\n        4    0.000    0.000    0.090    0.023 /usr/local/lib/python3.13/dist-packages/tabpfn/architectures/tabpfn_v2.py:799(forward)\n       48    0.003    0.000    0.083    0.002 /usr/local/lib/python3.13/dist-packages/tabpfn/architectures/tabpfn_v2.py:320(forward)\n        1    0.000    0.000    0.078    0.078 /usr/local/lib/python3.13/dist-packages/tabpfn/preprocessing/clean.py:263(fix_dtypes)\n    48/19    0.000    0.000    0.072    0.004 /usr/local/lib/python3.13/dist-packages/sklearn/utils/_set_output.py:317(wrapped)\n        7    0.000    0.000    0.068    0.010 /usr/local/lib/python3.13/dist-packages/sklearn/compose/_column_transformer.py:1033(transform)\n        7    0.000    0.000    0.064    0.009 /usr/local/lib/python3.13/dist-packages/sklearn/compose/_column_transformer.py:838(_call_func_on_transformers)\n        7    0.000    0.000    0.059    0.008 /usr/local/lib/python3.13/dist-packages/sklearn/utils/parallel.py:54(__call__)\n        7    0.000    0.000    0.059    0.008 /usr/local/lib/python3.13/dist-packages/joblib/parallel.py:1995(__call__)\n       28    0.000    0.000    0.059    0.002 /usr/local/lib/python3.13/dist-packages/joblib/parallel.py:1914(_get_sequential_output)\n       14    0.000    0.000    0.059    0.004 /usr/local/lib/python3.13/dist-packages/sklearn/utils/parallel.py:125(__call__)\n       14    0.000    0.000    0.058    0.004 /usr/local/lib/python3.13/dist-packages/sklearn/pipeline.py:1509(_transform_one)\n      240    0.003    0.000    0.055    0.000 /usr/local/lib/python3.13/dist-packages/tabpfn/architectures/shared/chunked_evaluate.py:18(chunked_evaluate_maybe_inplace)\n      117    0.002    0.000    0.048    0.000 /usr/local/lib/python3.13/dist-packages/pandas/core/internals/managers.py:317(apply)\n        4    0.000    0.000    0.043    0.011 /usr/local/lib/python3.13/dist-packages/tabpfn/preprocessing/clean.py:86(_cast_columns)\n        5    0.000    0.000    0.043    0.009 /usr/local/lib/python3.13/dist-packages/tabpfn/inference.py:1353(<genexpr>)\n        4    0.000    0.000    0.043    0.011 /usr/local/lib/python3.13/dist-packages/tabpfn/preprocessing/ensemble.py:71(transform_X_test)\n        4    0.000    0.000    0.043    0.011 /usr/local/lib/python3.13/dist-packages/tabpfn/preprocessing/pipeline_interface.py:394(transform)\n        4    0.000    0.000    0.043    0.011 /usr/local/lib/python3.13/dist-packages/tabpfn/preprocessing/pipeline_interface.py:436(_process_steps)\n       22    0.000    0.000    0.042    0.002 /usr/local/lib/python3.13/dist-packages/tabpfn/preprocessing/pipeline_interface.py:252(transform)\n\n\n",
+  "gpu_profile": "-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \n                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  \n-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \n                     aten::_efficient_attention_forward         0.39%       1.851ms         0.96%       4.597ms      47.890us     246.800ms        51.34%     246.800ms       2.571ms            96  \nfmha_cutlassF_f16_aligned_64x64_rf_sm75(PyTorchMemEf...         0.00%       0.000us         0.00%       0.000us       0.000us     246.800ms        51.34%     246.800ms       2.571ms            96  \n                                            aten::copy_         1.75%       8.356ms         4.70%      22.477ms      30.539us     228.950ms        47.62%     228.974ms     311.106us           736  \nvoid at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     227.171ms        47.25%     227.171ms     946.548us           240  \n                                               aten::mm         2.86%      13.697ms         3.57%      17.085ms      44.033us       2.787ms         0.58%       2.787ms       7.182us           388  \nvoid cutlass::Kernel2<cutlass_75_wmma_tensorop_f16_s...         0.00%       0.000us         0.00%       0.000us       0.000us       2.465ms         0.51%       2.465ms       6.811us           362  \nvoid at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.645ms         0.34%       1.645ms       3.954us           416  \n                                aten::native_layer_norm         0.70%       3.327ms         1.61%       7.700ms      53.470us     678.798us         0.14%     678.798us       4.714us           144  \nvoid at::native::(anonymous namespace)::vectorized_l...         0.00%       0.000us         0.00%       0.000us       0.000us     678.798us         0.14%     678.798us       4.714us           144  \n                                              aten::add         0.56%       2.689ms         0.90%       4.309ms      24.765us     390.197us         0.08%     390.197us       2.243us           174  \nvoid at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     334.616us         0.07%     334.616us       2.261us           148  \nturing_fp16_s1688gemm_fp16_64x64_sliced1x4_ldg8_f2f_...         0.00%       0.000us         0.00%       0.000us       0.000us     310.551us         0.06%     310.551us      12.940us            24  \n                                            aten::addmm         0.11%     502.158us         0.13%     613.982us      51.165us     223.001us         0.05%     223.001us      18.583us            12  \nvoid gemv2T_kernel_val<int, int, __half, __half, __h...         0.00%       0.000us         0.00%       0.000us       0.000us     184.475us         0.04%     184.475us      46.119us             4  \n                                             aten::gelu         0.16%     754.519us         0.25%       1.193ms      22.944us     176.922us         0.04%     176.922us       3.402us            52  \nvoid at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     176.922us         0.04%     176.922us       3.402us            52  \n                                              aten::mul         0.08%     363.825us         0.13%     602.494us      18.828us      83.388us         0.02%      83.388us       2.606us            32  \n                                               aten::eq         0.06%     304.071us         0.10%     456.306us      20.741us      55.231us         0.01%      55.231us       2.511us            22  \n                                              aten::all         0.17%     813.730us         0.23%       1.079ms      77.071us      54.271us         0.01%      61.342us       4.382us            14  \nvoid at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us      54.271us         0.01%      54.271us       6.784us             8  \nvoid at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      50.783us         0.01%      50.783us       2.539us            20  \nvoid at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      49.404us         0.01%      49.404us       2.470us            20  \nvoid at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us      45.982us         0.01%      45.982us       3.832us            12  \n                       Memcpy HtoD (Pageable -> Device)         0.00%       0.000us         0.00%       0.000us       0.000us      35.805us         0.01%      35.805us       2.557us            14  \n                                              aten::cat         0.04%     195.266us         0.06%     302.213us      30.221us      35.168us         0.01%      35.168us       3.517us            10  \n-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \nSelf CPU time total: 478.151ms\nSelf CUDA time total: 480.747ms\n"
+}
