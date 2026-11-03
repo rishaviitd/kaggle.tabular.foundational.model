@@ -75,6 +75,7 @@ class QueueTests(unittest.TestCase):
 
         base = Fake()
         service = QueuedHousingService(base, window_ms=5)
+        self.addCleanup(service.close)
         def call(i):
             return service.predict([{'Zip': f'{i:05}', 'State': 'CA', 'value': i}])
         with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
@@ -95,6 +96,30 @@ class QueueTests(unittest.TestCase):
             self.assertEqual(good.result()[0]['value'], 1)
             with self.assertRaises(ValueError):
                 bad.result()
+
+    def test_close_releases_worker_and_rejects_new_requests(self):
+        from housing_affordability.batching import QueuedHousingService
+        class Fake:
+            def predict(self, rows):
+                return rows
+        service = QueuedHousingService(Fake(), window_ms=1)
+        service.close()
+        self.assertFalse(service.worker.is_alive())
+        with self.assertRaises(RuntimeError):
+            service.predict([{'Zip': '90210', 'State': 'CA'}])
+
+    def test_cancelled_request_does_not_stop_worker(self):
+        from housing_affordability.batching import QueuedHousingService
+        class Fake:
+            def predict(self, rows):
+                return rows
+        service = QueuedHousingService(Fake(), window_ms=30)
+        self.addCleanup(service.close)
+        cancelled = service.submit([{'Zip': '90210', 'State': 'CA'}])
+        self.assertTrue(cancelled.cancel())
+        result = service.submit([{'Zip': '02134', 'State': 'MA'}]).result(timeout=2)
+        self.assertEqual(result[0]['Zip'], '02134')
+        self.assertTrue(service.worker.is_alive())
 
 
 if __name__ == '__main__':

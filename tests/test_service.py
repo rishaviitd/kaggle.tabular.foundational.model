@@ -3,12 +3,13 @@ import unittest
 import json
 import threading
 import urllib.request
+import http.client
 from http.server import HTTPServer
 
 import numpy as np
 import pandas as pd
 
-from housing_affordability.server import HousingService, create_handler
+from housing_affordability.server import HousingService, BatchedHTTPServer, create_handler
 
 
 class Builder:
@@ -52,6 +53,29 @@ class ServiceTests(unittest.TestCase):
         finally:
             thread.join(timeout=3)
             server.server_close()
+
+    def test_batched_transport_reuses_connection(self):
+        server = BatchedHTTPServer(('127.0.0.1', 0), create_handler(self.service, keep_alive=True))
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        connection = http.client.HTTPConnection('127.0.0.1', server.server_port, timeout=3)
+        payload = json.dumps({'records': [{'Zip': '02134', 'State': 'MA'}]})
+        try:
+            first_socket = None
+            for _ in range(2):
+                connection.request('POST', '/predict', body=payload,
+                                   headers={'Content-Type': 'application/json'})
+                response = connection.getresponse()
+                self.assertEqual(response.status, 200)
+                self.assertEqual(json.loads(response.read())['predictions'][0]['prediction'], 42.)
+                if first_socket is None:
+                    first_socket = connection.sock
+                self.assertIs(connection.sock, first_socket)
+        finally:
+            connection.close()
+            server.shutdown()
+            server.server_close()
+            thread.join()
 
 
 if __name__ == '__main__':

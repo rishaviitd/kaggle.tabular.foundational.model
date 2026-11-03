@@ -20,6 +20,8 @@ dependencies = [
 [project.optional-dependencies]
 experiments = ["tabicl==2.2.0"]
 batching = ["tabctx==0.17.1"]
+serving = ["fastapi", "uvicorn"]
+benchmarks = ["xgboost==3.4.1", "aiohttp", "httpx"]
 
 [project.scripts]
 housing-affordability-server = "housing_affordability.server:main"

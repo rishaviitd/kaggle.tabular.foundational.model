@@ -65,9 +65,22 @@ class QueuedHousingService:
         self.window = window_ms / 1000
         self.condition = threading.Condition()
         self.pending = deque()
-        threading.Thread(target=self._run, daemon=True).start()
+        self.closed = False
+        self.worker = threading.Thread(target=self._run, daemon=True)
+        self.worker.start()
+
+    def close(self):
+        """Drain accepted requests and release the worker's model reference."""
+        with self.condition:
+            self.closed = True
+            self.condition.notify_all()
+        self.worker.join()
 
     def predict(self, records):
+        return self.submit(records).result()
+
+    def submit(self, records):
+        """Submit without blocking an HTTP event loop."""
         if not isinstance(records, list) or not 0 < len(records) <= 2048:
             raise ValueError('records must be a list of 1 to 2048 rows')
         if any(not isinstance(row, dict) or not isinstance(row.get('Zip'), str)
@@ -77,14 +90,18 @@ class QueuedHousingService:
         signature = tuple(sorted({tuple(sorted(row)) for row in records}))
         future = Future()
         with self.condition:
+            if self.closed:
+                raise RuntimeError('Prediction queue is closed')
             self.pending.append((signature, records, future, time.monotonic()))
             self.condition.notify()
-        return future.result()
+        return future
 
     def _run(self):
         while True:
             with self.condition:
                 while not self.pending:
+                    if self.closed:
+                        return
                     self.condition.wait()
                 signature, records, future, arrived = self.pending.popleft()
                 deadline = arrived + self.window
@@ -101,7 +118,10 @@ class QueuedHousingService:
                     else:
                         remaining.append((key, rows, result, timestamp))
                 self.pending = remaining
-            self._execute(members)
+            members = [(rows, future) for rows, future in members
+                       if future.set_running_or_notify_cancel()]
+            if members:
+                self._execute(members)
 
     def _execute(self, members):
         try:
