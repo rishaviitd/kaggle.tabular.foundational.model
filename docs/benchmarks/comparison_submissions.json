@@ -1,0 +1,31 @@
+{
+  "competition": "predicting-housing-affordability-in-the-u-s",
+  "models": {
+    "xgboost_tuned": {
+      "ref": 57945713,
+      "total_bytes": "140804",
+      "date": "2026-11-03T11:28:57.500Z",
+      "description": "XGBoost CPU: 30 configurations selected on two inner ZIP splits excluding both outer holdouts; arcsine target, 1462 trees; held-out new-ZIP RMSE 5.6808 / 5.5448. Refit on all 13,660 labeled rows / 6,830 ZIPs. Uses external ACS, Zillow and Realtor.com Economic Research features.",
+      "file_name": "submission_xgboost_tuned.csv",
+      "public_score": "5.225",
+      "status": "COMPLETE",
+      "submitted_by": "atomstack001",
+      "submitted_by_ref": "atomstack001",
+      "team_name": "RISHAV KUMAR",
+      "url": "/submissions/57945713/57945713.raw"
+    },
+    "tabpfn": {
+      "ref": 57933746,
+      "total_bytes": "141001",
+      "date": "2026-11-03T05:07:09.677Z",
+      "description": "TabPFN trained with ACS, Zillow home value tiers, and Realtor.com Economic Research listing prices.",
+      "file_name": "submission_realtor.csv",
+      "public_score": "3.919",
+      "status": "COMPLETE",
+      "submitted_by": "atomstack001",
+      "submitted_by_ref": "atomstack001",
+      "team_name": "RISHAV KUMAR",
+      "url": "/submissions/57933746/57933746.raw"
+    }
+  }
+}

@@ -451,3 +451,47 @@ retains the four estimators, full training context and existing features.
 Reproduce with `python -m benchmarks.final_inference_comparison`; see
 [serving details](docs/serving.md#final-single-t4-comparison) and
 [raw trials](docs/benchmarks/final_inference_comparison.json).
+
+### Fair XGBoost accuracy tuning
+
+The previous CPU baseline used one fixed configuration. We tested **30**
+configurations with early stopping on two inner ZIP splits (seeds 2026/2027).
+The 2,469 ZIPs in the union of the published seed-42/137 holdouts were excluded
+from tuning entirely. The remaining 4,361 ZIPs supplied 3,488 training and 873
+validation ZIPs per inner split. Regional target features were rebuilt within
+each split. Selection minimized the mean inner new-ZIP RMSE.
+
+Trials varied depth, learning rate, row/column sampling, child weight, L1/L2
+regularization, ordinal versus native categorical handling, and raw/arcsine/logit
+targets. The winner used ordinal categories and an arcsine-square-root target
+transform, depth 5, learning rate 0.03, sampling 0.8, and L2 regularization 5.
+Its two early-stop counts were 1,584 and 1,341; the frozen refit count was
+**1,462 trees**. Native categories and logit targets did not improve selection
+scores in this search. This is a bounded search, not a proven optimum.
+
+| Reserved June ZIP split | Original XGBoost RMSE | Tuned XGBoost RMSE | Cached TabPFN RMSE |
+| --- | ---: | ---: | ---: |
+| Seed 42, 1,366 ZIPs | 5.736962 | **5.680814** | 4.622992 |
+| Seed 137, 1,366 ZIPs | 5.754148 | **5.544762** | 5.116784 |
+
+Tuning helped XGBoost on both reserved splits; TabPFN retained lower error.
+After fitting the selected XGBoost on all **13,660 labeled rows / 6,830 ZIPs**,
+submission **57945713** scored **5.225** publicly, versus TabPFN's **3.919**.
+Both use the same external Census, Zillow and Realtor.com features. Their
+submissions carry the same external-data eligibility limitation. The local
+numbers above are new-ZIP RMSE, not the weighted public competition metric.
+
+Reproduce tuning with `python -m benchmarks.tune_xgboost`. The
+[completed run](https://www.kaggle.com/code/atomstack001/housing-xgboost-fair-tuning),
+[all 30 trials](docs/benchmarks/xgboost_tuning.json), and
+[verified submission metadata](docs/benchmarks/comparison_submissions.json)
+record selection, full-data training counts and the submission SHA-256.
+
+The final paired run remeasured both full-data models on the same T4/Xeon
+host. Optimized TabPFN measured **145 ms / 163.7 requests/s**; tuned XGBoost
+measured **77 ms / 700.6 requests/s**, using its 0.1 ms latency and 80 ms
+throughput queue settings separately. Throughput uses 256 concurrent clients;
+values average three finite localhost trials. XGBoost refit predictions matched
+the submitted CSV within 1.5e-14. See the
+[paired run](https://www.kaggle.com/code/atomstack001/housing-tuned-xgboost-vs-tabpfn?scriptVersionId=365251494)
+and [raw results](docs/benchmarks/tuned_xgboost_comparison.json).

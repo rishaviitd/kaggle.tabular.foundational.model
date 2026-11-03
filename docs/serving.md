@@ -257,6 +257,10 @@ memoization or training-context subsampling is used by these optimizations.
 
 ## Final single-T4 comparison
 
+This records the original fixed-configuration XGBoost baseline. The newer
+[tuned comparison](#tuned-xgboost-comparison) below supersedes it for the README
+infographic.
+
 The [final Kaggle run](https://www.kaggle.com/code/atomstack001/housing-t4-final-inference-comparison)
 used one Tesla T4 and an Intel Xeon CPU at 2.00 GHz, with four CPU threads.
 It tested the shipped model wrapper and HTTP handlers, using aiohttp clients
@@ -297,6 +301,41 @@ Install benchmark dependencies with `pip install -e '.[serving,benchmarks]'`
 and reproduce with `python -m benchmarks.final_inference_comparison` after
 preparing the data. Raw trials are saved in
 [`final_inference_comparison.json`](benchmarks/final_inference_comparison.json).
+
+## Tuned XGBoost comparison
+
+After 30 XGBoost accuracy configurations, a new
+[same-host run, version 2](https://www.kaggle.com/code/atomstack001/housing-tuned-xgboost-vs-tabpfn?scriptVersionId=365251494)
+compared the selected 1,462-tree model with optimized four-estimator TabPFN.
+Both use the full training data and the same raw engineered features. Hardware
+remained one T4 used by TabPFN and a 2.00 GHz Xeon with four CPU threads.
+
+| Configuration | Single-client median latency | Requests/s at 256 clients |
+| --- | ---: | ---: |
+| Optimized TabPFN, persistent stdlib, 5 ms window | 145 ms | 163.7 |
+| Tuned CPU XGBoost, ASGI, 0.1 ms window | 77 ms | 461.5 |
+| Tuned CPU XGBoost, ASGI, 20 ms window | 97 ms | 616.8 |
+| Tuned CPU XGBoost, ASGI, 80 ms window | 157 ms | 700.6 |
+
+Values average three trials; every timed request predicts one unseen ZIP.
+The infographic uses XGBoost's lowest-latency and highest-throughput settings
+separately. These finite localhost request waves exclude internet latency and
+do not establish maximum or sustained capacity. Refitting the selected CPU
+model reproduced all 8,534 submitted predictions within 1.5e-14.
+
+Tuned XGBoost's reserved new-ZIP RMSE was **5.680814 / 5.544762** for seeds
+42 / 137, versus TabPFN's **4.622992 / 5.116784**. Its public Kaggle submission
+scored **5.225**, versus TabPFN's **3.919**. The public scores use external data;
+TabPFN's public result is from the original uncached model. See
+[accuracy methodology and submission details](model-comparison.md) and
+[raw paired trials](benchmarks/tuned_xgboost_comparison.json).
+
+Reproduce after preparing the data:
+
+```bash
+python -m benchmarks.tune_xgboost
+python -m benchmarks.tuned_xgboost_comparison --selection xgboost_tuning.json
+```
 
 ## Interpretability
 

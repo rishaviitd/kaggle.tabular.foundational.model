@@ -16,11 +16,13 @@ and Realtor.com Economic Research features. The tuned three-model blend scored
 set. Both submissions use external data and are not eligible under the
 competition rules. See [experiment.md](experiment.md) for the full history.
 
-![XGBoost CPU versus optimized TabPFN: accuracy and inference speed](docs/assets/model-tradeoff.png)
+![Tuned XGBoost CPU versus optimized TabPFN: accuracy and inference speed](docs/assets/model-tradeoff.png)
 
 [Comparison details and measurement conditions](docs/model-comparison.md).
-XGBoost has no recorded public submission; local RMSE provides the matched
-accuracy comparison. CPU latency and throughput use different batching windows.
+After 30 tuning configurations, XGBoost scored **5.225** on Kaggle versus
+TabPFN's **3.919**. Both local splits are shown separately from public scores.
+CPU latency and throughput use different batching windows. Both models use
+external data and have the eligibility limitation described above.
 
 ## Install
 
@@ -49,8 +51,8 @@ For the optimized single-T4 path, run:
 housing-affordability-server --cache --optimize --batch-window-ms 5
 ```
 
-On the same Kaggle host, this reduced single-request HTTP latency from
-**669 ms to 148 ms** and increased throughput at 256 concurrent clients from
+In the original before/after benchmark, this reduced single-request HTTP
+latency from **669 ms to 148 ms** and increased throughput at 256 clients from
 **111 to 156 requests/second**. Predictions matched the cached baseline on
 all 1,704 test ZIPs and two held-out splits. See
 [measured settings and XGBoost comparison](docs/serving.md#final-single-t4-comparison).
