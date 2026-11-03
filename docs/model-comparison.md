@@ -1,20 +1,28 @@
 # Accuracy and inference speed
 
-![Tuned XGBoost CPU versus optimized TabPFN on one T4](assets/model-tradeoff.png)
+![XGBoost CPU versus TabPFN on one T4](assets/model-tradeoff.png)
 
 Tuned XGBoost serves requests faster on CPU. TabPFN retains lower prediction
 error on both matched local splits and on the public Kaggle leaderboard.
 
-| Measurement | Tuned XGBoost CPU | Optimized TabPFN v2, one T4 |
+| Measurement | XGBoost CPU | TabPFN v2, one T4 |
 | --- | ---: | ---: |
 | Single-client HTTP latency | 77 ms | 145 ms |
 | HTTP throughput, 256 concurrent clients | 701 requests/s | 164 requests/s |
 | Saved model / base checkpoint size | 3.94 MB | 44.39 MB |
+| Mean local unseen-ZIP RMSE (shown in graphic) | 5.613 | 4.870 |
 | Local unseen-ZIP RMSE, seed 42 | 5.681 | 4.623 |
 | Local unseen-ZIP RMSE, seed 137 | 5.545 | 5.117 |
 | Public Kaggle score* | 5.225 | 3.919 |
 
 Lower latency and error are better; higher throughput is better. The local
+score in the graphic is the arithmetic mean of the two split RMSEs below,
+not a pooled RMSE: XGBoost **5.612788**, TabPFN **4.869888**. Split-specific
+results are retained here for reproducibility, while the graphic shows one
+local number per model. All measurement notes appear here instead of in an
+image footer.
+
+The local
 RMSE checks are distinct from the competition's weighted metric. Each local
 split holds out entire ZIPs and evaluates 1,366 June targets. Both models use
 the same 106 raw engineered features, including external sources. TabPFN also

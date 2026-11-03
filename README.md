@@ -1,29 +1,29 @@
-![Housing Affordability](docs/assets/banner.svg)
+<p align="center">
+  <img src="docs/assets/model-tradeoff.png" alt="XGBoost versus TabPFN: accuracy, inference speed and model size" width="100%">
+</p>
+
+<h1 align="center">Housing Affordability with TabPFN</h1>
+
+<p align="center">
+  Tabular foundation models for US housing affordability, with reproducible evaluation, optimized inference and model interpretation.
+</p>
+
+<p align="center">
+  <a href="https://www.kaggle.com/competitions/predicting-housing-affordability-in-the-u-s">Competition</a>
+  · <a href="docs/model-comparison.md">Model comparison</a>
+  · <a href="experiment.md">Experiments</a>
+</p>
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Model](https://img.shields.io/badge/Model-TabPFN%20v2-00A98F)](https://github.com/PriorLabs/TabPFN)
 [![Kaggle](https://img.shields.io/badge/Kaggle-public%20score%203.919-20BEFF?logo=kaggle&logoColor=white)](experiment.md)
 
-[Install](#install) · [Serve predictions](#serve-predictions) · [Interpret](#interpret-predictions) · [Experiments](experiment.md) · [Benchmarks](docs/serving.md)
+[Install](#install) · [Serve predictions](#serve-predictions) · [Interpret](#interpret-predictions) · [Benchmarks](docs/serving.md)
 
-A tabular foundation model for predicting housing affordability by US ZIP code.
-The repository includes reproducible evaluation, a persistent inference service,
-and model interpretation tools.
-
-The best public Kaggle score was **3.919** using TabPFN v2 with Census, Zillow,
-and Realtor.com Economic Research features. The tuned three-model blend scored
-**4.012**. Lower is better; the public leaderboard covers only part of the test
-set. Both submissions use external data and are not eligible under the
-competition rules. See [experiment.md](experiment.md) for the full history.
-
-![Tuned XGBoost CPU versus optimized TabPFN: accuracy and inference speed](docs/assets/model-tradeoff.png)
-
-[Comparison details and measurement conditions](docs/model-comparison.md).
-After 30 tuning configurations, XGBoost scored **5.225** on Kaggle versus
-TabPFN's **3.919**. Both local splits are shown separately from public scores.
-CPU latency and throughput use different batching windows. Both models use
-external data and have the eligibility limitation described above.
-The graphic also includes saved model sizes and exact model/package versions.
+The graphic's local RMSE is the average across two ZIP-held-out splits.
+[Measurement details](docs/model-comparison.md) explain batching settings,
+model file sizes and validation. Public scores use external data and are
+not competition-eligible.
 
 ## Install
 

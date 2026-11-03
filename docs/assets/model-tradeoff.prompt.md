@@ -1,37 +1,33 @@
-# Model comparison infographic prompt
+# Model comparison hero image prompt
 
 Tool: built-in image generation, edit mode.
-Reference: docs/assets/model-tradeoff.png from Git commit 6394cfe.
+Reference: docs/assets/model-tradeoff.png from Git commit 8c0fb18.
 
 Use case: infographic-diagram, edit.
-Edit the supplied comparison PNG into a substantially more spacious, brighter, polished report infographic. This is a redesign, not just a recolor. Use a roomy 4:3 landscape canvas, ideally 2400×1800, with generous outer margins and generous row padding. Warm ivory/paper background, walnut wood-brown headings, tasteful terracotta accents for CPU and deep forest/teal accents for GPU. Subtle warm natural tones, NO busy woodgrain behind text, NO dark navy background, no neon/glowing outlines. Modern readable sans-serif for data, elegant editorial title, thin dividers, plenty of whitespace. Simplify CPU/GPU graphics into attractive clean recognizable hardware illustrations with warmth, no noisy oversized gaming graphics. Tiny housing motif if useful. Keep logical aligned comparison columns and readable footnotes.
+Simplify this supplied infographic into a spacious, attractive GitHub README HERO IMAGE. Preserve its warm ivory paper background, walnut-brown headings, terracotta CPU accents, forest-green GPU accents, housing illustration and tasteful CPU/GPU icons. Clean, bright editorial design, large readable numbers and generous whitespace. Landscape 3:2. Make it feel like the opening visual of a professional ML repository, not a dense benchmark report.
 
-Exact title: "Accuracy vs inference speed"
-Subtitle: "Housing affordability · same features, different tradeoffs"
+Title: "Accuracy vs inference speed"
+Subtitle: "Housing affordability · XGBoost vs TabPFN"
 
-Two model header cards, aligned over metric columns:
-LEFT: "Tuned XGBoost", "CPU · 4 threads", "1,462 trees · depth 5", "XGBoost 3.4.1".
-RIGHT: "TabPFN v2", "GPU · 1 × Tesla T4", "4 estimators", "Python package: tabpfn 9.2.0".
-Clearly distinguish TabPFN MODEL version v2 from Python PACKAGE version 9.2.0. No model called v9.
+Model column headers:
+"XGBoost" with smaller "CPU · 4 threads"
+"TabPFN v2" with smaller "GPU · 1 × Tesla T4"
+Keep attractive small hardware icons. Remove the word "Tuned" EVERYWHERE. Remove tree counts, depth, estimator counts, Python package versions, and all dense header metadata; those live in the docs.
 
-Six clear aligned metric rows with exact text and values, LEFT XGBoost then RIGHT TabPFN:
+Exactly FIVE aligned metric rows, XGBoost left then TabPFN right:
 "Single-request latency ↓" : "77 ms" | "145 ms"
 "Throughput ↑" : "701 req/s" | "164 req/s"
 "Model file size" : "3.94 MB" | "44.39 MB"
-"Local RMSE · seed 42 ↓" : "5.681" | "4.623"
-"Local RMSE · seed 137 ↓" : "5.545" | "5.117"
-"Kaggle public score ↓" : "5.225*" | "3.919*"
-File-size right value is the shared base checkpoint size, NOT four checkpoint copies or runtime memory. Label small beneath size row "Saved XGBoost model / TabPFN base checkpoint". Highlight CPU speed wins subtly in terracotta and TabPFN error wins subtly in teal. Lower error and latency are better; higher throughput is better. No fake bar scales.
+"Local RMSE ↓" : "5.613" | "4.870"
+"Kaggle public score ↓" : "5.225" | "3.919"
 
-Two compact spacious tradeoff summaries below:
-"Tuned XGBoost": "+ Faster CPU serving", "− Higher prediction error".
-"TabPFN v2": "+ Lower prediction error", "− GPU used in this setup".
+IMPORTANT Local RMSE values now represent the arithmetic mean of the two previously reported split RMSEs; the image shows ONE local score per model. No seeds, no second local row, no split labels. Keep this method explanation OUT of the image (it goes in documentation).
+Highlight XGBoost latency and throughput subtly in terracotta, and TabPFN local/public error subtly in forest green. Keep model-size values neutral.
 
-Required legible footnotes, placed with breathing space at bottom, exact content:
-"Same Kaggle host · unseen ZIPs · localhost HTTP · three trials"
-"Latency: one client. Throughput: 256 clients; CPU uses a larger batching window."
-"Local RMSE: 1,366 held-out ZIPs per split; distinct from the Kaggle metric."
-"File sizes use decimal MB; runtime RAM/VRAM and TabPFN context/cache are extra."
-"* Both use external data. TabPFN public score uses the original uncached model."
+Below the table, retain only two light compact takeaway cards:
+under XGBoost: "Faster CPU inference"
+under TabPFN: "Lower prediction error"
+No extra bullet lists or lengthy pros/cons.
 
-All measurements and digits must remain exact. No omitted metric, no invented information, no cramped text, no clipping. Prioritize readable balanced visual hierarchy over decorative hardware images. Add whitespace by expanding the canvas rather than shrinking type.
+REMOVE THE ENTIRE OLD FOOTER. No footer text, no asterisks, no footnotes, no methodology, no eligibility text, no fine print, no bottom divider suggesting missing text. End with clean breathing room below the two takeaway cards. Detailed measurement context and caveats are in the README/docs, not this visual.
+All five metric rows and exact values must be preserved without invention. Do not shrink type to fill the old space; use removed text space for generous spacing and better hierarchy. No bar charts, no noisy wood grain.
