@@ -495,3 +495,40 @@ values average three finite localhost trials. XGBoost refit predictions matched
 the submitted CSV within 1.5e-14. See the
 [paired run](https://www.kaggle.com/code/atomstack001/housing-tuned-xgboost-vs-tabpfn?scriptVersionId=365251494)
 and [raw results](docs/benchmarks/tuned_xgboost_comparison.json).
+
+### TabPFN 3 regression, single estimator
+
+Replaced only the checkpoint/estimator configuration in an isolated Kaggle
+experiment: default v3 regression checkpoint, `n_estimators=1`, cached inference,
+one T4, the same 106 features and the existing two held-out ZIP splits. A v2
+single-estimator control separates the version change from ensemble removal.
+No v2-specific attention or input-encoding patches were applied to v3.
+
+| Model | Seed 42 RMSE | Seed 137 RMSE | Mean local RMSE |
+| --- | ---: | ---: | ---: |
+| TabPFN v3, one estimator | 5.220582 | 4.779488 | **5.000035** |
+| TabPFN v2, one estimator | 4.696288 | 5.109243 | **4.902766** |
+| Existing TabPFN v2, four estimators (previous run) | 4.622992 | 5.116784 | **4.869888** |
+
+V3 won one split and lost the other; its mean error was higher. Removing the
+ensemble did not improve mean accuracy. Keep the existing v2 default; do not
+replace its public score or README comparison with these unsubmitted results.
+
+The full-data v3 fit used all 13,660 labeled rows / 6,830 ZIPs. With the same
+persistent HTTP backend and 5 ms queue, it measured **132.6 ms** single-client
+latency and **390.6 requests/s** at 256 clients, averaged over three trials.
+Predictions were processed in chunks of at most 128 rows. Earlier optimized
+v2-four-estimator timings were 145.0 ms / 163.7 requests/s on the same hardware
+class, from a separate run; this is not a same-session speed ablation.
+
+Peak full-data v3 GPU memory was **3.86 GB allocated / 6.27 GB reserved** by
+PyTorch. Reported GPU capacity was 15,636,037,632 bytes (T4, nominal 16 GB),
+system RAM 33,658,155,008 bytes, and CPU allocation four logical CPUs on an
+Intel Xeon at 2.00 GHz. The v3 checkpoint was 233,289,807 bytes. Allocated and
+reserved GPU figures are not total device memory usage.
+
+Reproduce with `python -m benchmarks.tabpfn_v3_single`. The
+[completed Kaggle run](https://www.kaggle.com/code/atomstack001/housing-tabpfn-v3-single-estimator)
+and [raw results](docs/benchmarks/tabpfn_v3_single.json) include local scores,
+HTTP trials, hardware capacity and peak GPU memory. Saved held-out predictions
+are alongside the report in `docs/benchmarks/`.

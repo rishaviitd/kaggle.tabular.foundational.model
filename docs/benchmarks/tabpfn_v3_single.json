@@ -1,0 +1,144 @@
+{
+  "gpu": "Tesla T4",
+  "gpu_vram_bytes": 15636037632,
+  "cpu": "model name\t: Intel(R) Xeon(R) CPU @ 2.00GHz",
+  "logical_cpus": 4,
+  "cpu_threads": 4,
+  "system_ram_bytes": 33658155008,
+  "estimators": 1,
+  "fit_mode": "fit_with_cache",
+  "heldout": {
+    "42": {
+      "v3_single": {
+        "rows": 1366,
+        "training_zips": 5464,
+        "rmse": 5.220582336706177,
+        "fit_predict_seconds": 4.53710921000004,
+        "peak_gpu_allocated_bytes": 3140759552,
+        "peak_gpu_reserved_bytes": 5083496448
+      },
+      "v2_single": {
+        "rows": 1366,
+        "training_zips": 5464,
+        "rmse": 4.696287889250608,
+        "fit_predict_seconds": 11.712775933999978,
+        "peak_gpu_allocated_bytes": 4620554240,
+        "peak_gpu_reserved_bytes": 7329546240
+      }
+    },
+    "137": {
+      "v3_single": {
+        "rows": 1366,
+        "training_zips": 5464,
+        "rmse": 4.779488491548105,
+        "fit_predict_seconds": 2.425430393000056,
+        "peak_gpu_allocated_bytes": 3141413376,
+        "peak_gpu_reserved_bytes": 5083496448
+      },
+      "v2_single": {
+        "rows": 1366,
+        "training_zips": 5464,
+        "rmse": 5.109243261201024,
+        "fit_predict_seconds": 12.122415331000013,
+        "peak_gpu_allocated_bytes": 4620554240,
+        "peak_gpu_reserved_bytes": 7329546240
+      }
+    }
+  },
+  "scope": "same features and ZIP-held-out June targets; no v2-specific attention patches",
+  "checkpoint_bytes": {
+    "v3_single": 233289807,
+    "v2_single": 44390977
+  },
+  "mean_local_rmse": {
+    "v3_single": 5.000035414127141,
+    "v2_single": 4.902765575225816
+  },
+  "full_fit_training_rows": 13660,
+  "full_fit_training_zips": 6830,
+  "http": {
+    "1": [
+      {
+        "seconds": 2.069615252999995,
+        "requests_per_second": 7.730905527878828,
+        "median_latency_seconds": 0.12891486600000235,
+        "p95_latency_seconds": 0.13543671399997947
+      },
+      {
+        "seconds": 2.090503711999986,
+        "requests_per_second": 7.653657780254688,
+        "median_latency_seconds": 0.13170936150001467,
+        "p95_latency_seconds": 0.13533340450000253
+      },
+      {
+        "seconds": 2.183254488999978,
+        "requests_per_second": 7.328508921252085,
+        "median_latency_seconds": 0.13721267900001521,
+        "p95_latency_seconds": 0.13975945499997522
+      }
+    ],
+    "32": [
+      {
+        "seconds": 1.2680788210000173,
+        "requests_per_second": 100.9400976345131,
+        "median_latency_seconds": 0.28754481850000957,
+        "p95_latency_seconds": 0.37478372104997104
+      },
+      {
+        "seconds": 1.2824343379999732,
+        "requests_per_second": 99.81017835160515,
+        "median_latency_seconds": 0.294695307000012,
+        "p95_latency_seconds": 0.3591138595499984
+      },
+      {
+        "seconds": 1.2692262329999835,
+        "requests_per_second": 100.8488452822592,
+        "median_latency_seconds": 0.2960581499999648,
+        "p95_latency_seconds": 0.36448058184999466
+      }
+    ],
+    "128": [
+      {
+        "seconds": 1.8525741280000148,
+        "requests_per_second": 276.3722067913905,
+        "median_latency_seconds": 0.4064660814999854,
+        "p95_latency_seconds": 0.5724132768500055
+      },
+      {
+        "seconds": 1.6205889220000245,
+        "requests_per_second": 315.9345303731456,
+        "median_latency_seconds": 0.3576403554999956,
+        "p95_latency_seconds": 0.5425021889500101
+      },
+      {
+        "seconds": 1.5938777900000218,
+        "requests_per_second": 321.22914517805845,
+        "median_latency_seconds": 0.30272185799998397,
+        "p95_latency_seconds": 0.5295016966999896
+      }
+    ],
+    "256": [
+      {
+        "seconds": 2.6582360919999815,
+        "requests_per_second": 385.2178529520948,
+        "median_latency_seconds": 0.5757096680000018,
+        "p95_latency_seconds": 0.8055306816000467
+      },
+      {
+        "seconds": 2.629944988000034,
+        "requests_per_second": 389.3617564900893,
+        "median_latency_seconds": 0.5769358525000143,
+        "p95_latency_seconds": 0.860824569899998
+      },
+      {
+        "seconds": 2.577688606000038,
+        "requests_per_second": 397.25512135812454,
+        "median_latency_seconds": 0.5619867039999917,
+        "p95_latency_seconds": 0.8377985813000008
+      }
+    ]
+  },
+  "full_fit_peak_gpu_allocated_bytes": 3859316736,
+  "full_fit_peak_gpu_reserved_bytes": 6268387328,
+  "complete": true
+}
