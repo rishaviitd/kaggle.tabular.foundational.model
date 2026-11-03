@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.model_selection import GroupKFold
 
 ROOT = Path(os.environ.get('HOUSING_AFFORDABILITY_ROOT', Path(__file__).resolve().parents[1])).resolve()
-from housing_affordability.aggregated_features import feats, enc, Y
+from housing_affordability.aggregated_features import feats, enc, Y, RegionalEncoder
 
 DATA = ROOT / 'artifacts/external_acs'
 
@@ -103,6 +103,7 @@ class FeatureBuilder:
     def __init__(self, history, external, example_query):
         self.external = external
         self.reference = aggregate_history(history)
+        self.regional_encoder = RegionalEncoder(self.reference)
         self.x, self.y, _ = prepare(history, example_query, external)
         first_extra = self.x.columns.get_loc('ZILLOW_zhvi_2024-06-30')
         self.base_columns = self.x.columns[:first_extra]
@@ -114,7 +115,7 @@ class FeatureBuilder:
             raise ValueError('transform expects previously unseen ZIPs')
         census, extra = self.external
         q = feats(query)
-        q[[f'Regional{i}' for i in range(12)]] = enc(self.reference, query)
+        q[[f'Regional{i}' for i in range(12)]] = self.regional_encoder.transform(query)
         q = pd.concat([q, census.reindex(query.Zip).reset_index(drop=True)], axis=1).reindex(columns=self.base_columns)
         for col in q.columns:
             if isinstance(self.x[col].dtype, pd.CategoricalDtype):
