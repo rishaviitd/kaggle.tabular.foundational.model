@@ -9,6 +9,7 @@ error on both matched local splits and on the public Kaggle leaderboard.
 | --- | ---: | ---: |
 | Single-client HTTP latency | 77 ms | 145 ms |
 | HTTP throughput, 256 concurrent clients | 701 requests/s | 164 requests/s |
+| Saved model / base checkpoint size | 3.94 MB | 44.39 MB |
 | Local unseen-ZIP RMSE, seed 42 | 5.681 | 4.623 |
 | Local unseen-ZIP RMSE, seed 137 | 5.545 | 5.117 |
 | Public Kaggle score* | 5.225 | 3.919 |
@@ -18,6 +19,13 @@ RMSE checks are distinct from the competition's weighted metric. Each local
 split holds out entire ZIPs and evaluates 1,366 June targets. Both models use
 the same 106 raw engineered features, including external sources. TabPFN also
 performs its fitted ensemble preprocessing.
+
+File sizes use decimal MB: the saved XGBoost UBJSON model is **3,938,691 bytes**;
+the shared TabPFN base checkpoint is **44,390,977 bytes**. Runtime RAM/VRAM,
+preprocessing state, and TabPFN's training context/cache are additional. Four
+TabPFN estimators do not mean four separate checkpoint downloads. The model is
+**TabPFN v2**, loaded from `Prior-Labs/TabPFN-v2-reg/tabpfn-v2-regressor.ckpt`
+using Python package **tabpfn 9.2.0**. XGBoost uses **3.4.1**.
 
 ## How XGBoost was tuned
 

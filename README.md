@@ -23,6 +23,7 @@ After 30 tuning configurations, XGBoost scored **5.225** on Kaggle versus
 TabPFN's **3.919**. Both local splits are shown separately from public scores.
 CPU latency and throughput use different batching windows. Both models use
 external data and have the eligibility limitation described above.
+The graphic also includes saved model sizes and exact model/package versions.
 
 ## Install
 
