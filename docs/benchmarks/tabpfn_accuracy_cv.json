@@ -1,0 +1,95 @@
+{
+  "package_version": "9.2.0",
+  "estimators": 4,
+  "fold_seed": 42,
+  "model_seed": 42,
+  "folds": {
+    "0": {
+      "v2": {
+        "rmse": 4.622986938669608,
+        "rows": 1366,
+        "training_zips": 5464,
+        "fit_predict_seconds": 31.917274748999944
+      },
+      "v3": {
+        "rmse": 4.628971905329218,
+        "rows": 1366,
+        "training_zips": 5464,
+        "fit_predict_seconds": 6.998614148999991
+      }
+    },
+    "1": {
+      "v2": {
+        "rmse": 4.465741779335513,
+        "rows": 1366,
+        "training_zips": 5464,
+        "fit_predict_seconds": 30.89319917499995
+      },
+      "v3": {
+        "rmse": 4.676954137575667,
+        "rows": 1366,
+        "training_zips": 5464,
+        "fit_predict_seconds": 6.760231632999989
+      }
+    },
+    "2": {
+      "v2": {
+        "rmse": 4.891313852187784,
+        "rows": 1366,
+        "training_zips": 5464,
+        "fit_predict_seconds": 32.320141955000054
+      },
+      "v3": {
+        "rmse": 4.661557878787555,
+        "rows": 1366,
+        "training_zips": 5464,
+        "fit_predict_seconds": 6.958900779000032
+      }
+    },
+    "3": {
+      "v2": {
+        "rmse": 4.951623023962005,
+        "rows": 1366,
+        "training_zips": 5464,
+        "fit_predict_seconds": 34.126755091000064
+      },
+      "v3": {
+        "rmse": 4.81594176017322,
+        "rows": 1366,
+        "training_zips": 5464,
+        "fit_predict_seconds": 7.182981396000059
+      }
+    },
+    "4": {
+      "v2": {
+        "rmse": 5.209103906465166,
+        "rows": 1366,
+        "training_zips": 5464,
+        "fit_predict_seconds": 33.38096808799992
+      },
+      "v3": {
+        "rmse": 4.9180006028606655,
+        "rows": 1366,
+        "training_zips": 5464,
+        "fit_predict_seconds": 6.968873239000004
+      }
+    }
+  },
+  "fit_mode": "fit_with_cache",
+  "device": "cuda:0",
+  "scope": "paired unseen-ZIP June OOF; same external feature pipeline; native version-specific internal preprocessing",
+  "checkpoint_sha256": {
+    "v2": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+    "v3": "311ce18d97e9533d8585eaadafe040fbdd8070533209ed8696641dadc97a7301"
+  },
+  "oof_rows": 6830,
+  "pooled_oof_rmse": {
+    "v2": 4.835145150979398,
+    "v3": 4.741548855167853
+  },
+  "mean_fold_rmse": {
+    "v2": 4.828153900124016,
+    "v3": 4.740285256945265
+  },
+  "complete": true
+}

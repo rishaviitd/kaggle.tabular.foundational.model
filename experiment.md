@@ -532,3 +532,41 @@ Reproduce with `python -m benchmarks.tabpfn_v3_single`. The
 and [raw results](docs/benchmarks/tabpfn_v3_single.json) include local scores,
 HTTP trials, hardware capacity and peak GPU memory. Saved held-out predictions
 are alongside the report in `docs/benchmarks/`.
+
+### Paired five-fold TabPFN v2 versus v3 accuracy
+
+The follow-up matched the ensemble budget: **four estimators for both models**,
+package `tabpfn==9.2.0`, model seed 42, cached inference, one T4 and no custom
+v2 attention/input patches. Both models received identical training/query
+feature tables per fold; each retained its version-native internal preprocessing.
+This compares the released model pipelines, not architecture alone.
+
+Five shuffled ZIP folds (seed 42) evaluated each of the 6,830 ZIPs exactly once
+against its June target. All observations of a held-out ZIP were excluded from
+training. The shared feature builder refitted regional summaries inside each
+fold. No hyperparameters were selected using these results.
+
+| Fold | v2 RMSE | v3 RMSE |
+| --- | ---: | ---: |
+| 0 | 4.622987 | 4.628972 |
+| 1 | 4.465742 | 4.676954 |
+| 2 | 4.891314 | 4.661558 |
+| 3 | 4.951623 | 4.815942 |
+| 4 | 5.209104 | 4.918001 |
+| **Pooled out-of-fold RMSE** | **4.835145** | **4.741549** |
+
+V3 reduced overall RMSE by **1.94%** and won three of five folds. This reverses
+the earlier single-estimator comparison's mean result: the benefit depends on
+the estimator configuration. The gain is modest, and one five-fold assignment
+does not establish statistical significance. Neither model was submitted in
+this experiment. These five-fold pooled scores are distinct from the README's
+earlier two-split mean scores; do not compare them as though the evaluation
+set were unchanged.
+
+Reproduce with `python -m benchmarks.tabpfn_accuracy_cv`. The
+[completed Kaggle run](https://www.kaggle.com/code/atomstack001/housing-tabpfn-paired-accuracy),
+[raw report](docs/benchmarks/tabpfn_accuracy_cv.json), and
+[paired out-of-fold predictions](docs/benchmarks/tabpfn_accuracy_cv_oof.csv)
+record every fold and checkpoint hashes. Both pooled and fold-specific scores
+were independently recomputed from the saved predictions, with ZIP identities,
+fold assignments and target labels checked against the original training data.
