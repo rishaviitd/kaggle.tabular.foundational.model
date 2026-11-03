@@ -1,0 +1,215 @@
+{
+  "checkpoint": "TabPFN-v2-reg",
+  "checkpoint_sha256": "2ab5a07d5c41dfe6db9aa7ae106fc6de898326c2765be66505a07e2868c10736",
+  "estimators": 4,
+  "model_seed": 42,
+  "fold_seed": 42,
+  "folds": {
+    "0": {
+      "recent_weighted": {
+        "rmse": 4.632403290758891,
+        "seconds": 32.49820762400003
+      },
+      "property_types": {
+        "rmse": 4.627362144766063,
+        "seconds": 32.90022696600005
+      },
+      "density_bins": {
+        "rmse": 4.627584487883558,
+        "seconds": 44.60933991999991
+      },
+      "mechanism_residual": {
+        "rmse": 4.65822492578902,
+        "seconds": 33.821584826999924
+      }
+    },
+    "1": {
+      "recent_weighted": {
+        "rmse": 4.472418981803693,
+        "seconds": 33.08907905800004
+      },
+      "property_types": {
+        "rmse": 4.461541180808022,
+        "seconds": 35.63001164100001
+      },
+      "density_bins": {
+        "rmse": 4.533536783836108,
+        "seconds": 46.23068175100002
+      },
+      "mechanism_residual": {
+        "rmse": 4.549794852386184,
+        "seconds": 32.99477265299993
+      }
+    },
+    "2": {
+      "recent_weighted": {
+        "rmse": 4.9021968549536865,
+        "seconds": 33.30579442199996
+      },
+      "property_types": {
+        "rmse": 4.962029784730923,
+        "seconds": 35.52116347499998
+      },
+      "density_bins": {
+        "rmse": 4.8240672888849145,
+        "seconds": 46.08503731500002
+      },
+      "mechanism_residual": {
+        "rmse": 4.70300482626203,
+        "seconds": 32.78885337199995
+      }
+    },
+    "3": {
+      "recent_weighted": {
+        "rmse": 4.947963845214197,
+        "seconds": 33.49606010900004
+      },
+      "property_types": {
+        "rmse": 4.979253703973851,
+        "seconds": 35.910499752999954
+      },
+      "density_bins": {
+        "rmse": 4.9820440964044055,
+        "seconds": 46.54428018700003
+      },
+      "mechanism_residual": {
+        "rmse": 5.147877873437765,
+        "seconds": 33.139295092
+      }
+    },
+    "4": {
+      "recent_weighted": {
+        "rmse": 5.202513671300913,
+        "seconds": 33.18041552599993
+      },
+      "property_types": {
+        "rmse": 5.071293033351531,
+        "seconds": 35.667683487999966
+      },
+      "density_bins": {
+        "rmse": 5.1343862471894886,
+        "seconds": 46.276751673000035
+      },
+      "mechanism_residual": {
+        "rmse": 5.204794786366971,
+        "seconds": 32.98074184999996
+      }
+    }
+  },
+  "scope": "reused five-fold tuning; June unseen-ZIP RMSE",
+  "baseline_rmse": 4.835145150979398,
+  "choices": [
+    {
+      "variant": "recent_weighted",
+      "weight": 0.25,
+      "rmse": 4.834439703931504,
+      "fold_wins": 2
+    },
+    {
+      "variant": "recent_weighted",
+      "weight": 0.5,
+      "rmse": 4.834716748296461,
+      "fold_wins": 2
+    },
+    {
+      "variant": "recent_weighted",
+      "weight": 0.75,
+      "rmse": 4.8359761152187755,
+      "fold_wins": 2
+    },
+    {
+      "variant": "recent_weighted",
+      "weight": 1.0,
+      "rmse": 4.838217037615601,
+      "fold_wins": 2
+    },
+    {
+      "variant": "property_types",
+      "weight": 0.25,
+      "rmse": 4.8145557807382104,
+      "fold_wins": 5
+    },
+    {
+      "variant": "property_types",
+      "weight": 0.5,
+      "rmse": 4.806138489328236,
+      "fold_wins": 4
+    },
+    {
+      "variant": "property_types",
+      "weight": 0.75,
+      "rmse": 4.809957179573152,
+      "fold_wins": 3
+    },
+    {
+      "variant": "property_types",
+      "weight": 1.0,
+      "rmse": 4.825982805399822,
+      "fold_wins": 2
+    },
+    {
+      "variant": "density_bins",
+      "weight": 0.25,
+      "rmse": 4.82244290768911,
+      "fold_wins": 4
+    },
+    {
+      "variant": "density_bins",
+      "weight": 0.5,
+      "rmse": 4.816570699628792,
+      "fold_wins": 3
+    },
+    {
+      "variant": "density_bins",
+      "weight": 0.75,
+      "rmse": 4.817553502644715,
+      "fold_wins": 3
+    },
+    {
+      "variant": "density_bins",
+      "weight": 1.0,
+      "rmse": 4.825387128188402,
+      "fold_wins": 2
+    },
+    {
+      "variant": "mechanism_residual",
+      "weight": 0.25,
+      "rmse": 4.812897253536902,
+      "fold_wins": 4
+    },
+    {
+      "variant": "mechanism_residual",
+      "weight": 0.5,
+      "rmse": 4.8096716862326385,
+      "fold_wins": 3
+    },
+    {
+      "variant": "mechanism_residual",
+      "weight": 0.75,
+      "rmse": 4.825506595143576,
+      "fold_wins": 2
+    },
+    {
+      "variant": "mechanism_residual",
+      "weight": 1.0,
+      "rmse": 4.86021568290768,
+      "fold_wins": 2
+    }
+  ],
+  "selected": {
+    "variant": "property_types",
+    "weight": 0.5,
+    "rmse": 4.806138489328236,
+    "fold_wins": 4
+  },
+  "seen_drift": {
+    "constant": -0.33162518301610544,
+    "persistence_rmse": 1.2524061760739718,
+    "crossfit_drift_rmse": 1.2078996905183437
+  },
+  "confirmation_seed137": {
+    "baseline_rmse": 5.116873458465796,
+    "candidate_rmse": 5.038681868888676
+  },
+  "complete": true
+}

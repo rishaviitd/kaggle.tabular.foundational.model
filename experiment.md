@@ -589,3 +589,51 @@ Reproduce the full-data prediction file with
 [completed prediction notebook](https://www.kaggle.com/code/atomstack001/housing-tabpfn-v3-submission)
 and [verified submission record](docs/benchmarks/tabpfn_v3_submission.json)
 record the training counts, checkpoint/submission hashes and public score.
+
+### Focused v2 improvements from the 3.919 submission
+
+Four v2-only variations used the same seed-42 five-fold ZIP validation and
+four-estimator checkpoint. Predictions were compared with the saved v2 OOF;
+fixed blend weights of 0.25, 0.5, 0.75 and 1.0 were evaluated on these reused
+folds. These are tuning estimates, not a fresh unbiased test.
+
+| Variation | Best weight with baseline | New-ZIP RMSE | Folds improved |
+| --- | ---: | ---: | ---: |
+| Original baseline | — | 4.835145 | — |
+| 75% June / 25% May aggregation | 0.25 | 4.834440 | 2/5 |
+| Zillow single-family and condo features | **0.50** | **4.806138** | **4/5** |
+| Income/home-value density bins alongside CDFs | 0.50 | 4.816571 | 3/5 |
+| Affordability-proxy residual target | 0.50 | 4.809672 | 3/5 |
+
+The selected property-type variant added 2025/2026 June single-family/condo
+values, annual growth and price/income ratios. A separate seed-137 ZIP split
+confirmed lower RMSE: **5.116873 → 5.038682**. This split changes ZIP groups
+but reuses the same underlying labeled dataset.
+
+Separately, the seen-ZIP path now tests forecasting monthly change with v2.
+Inputs contain the prior known target, observed numeric feature changes, ZIP
+and regional categories, and home-value changes. The current-month target is
+excluded; changing it was verified not to change model inputs. Five ZIP folds
+predicted May-to-June changes, giving **1.148947 RMSE** versus **1.252406** for
+persistence and **1.205891** for a cross-fitted constant drift. Blending toward
+the constant did not help; the selected weight on the v2 forecast was 1.0.
+July transfer remains a temporal hypothesis because only one labeled monthly
+transition is available. The full-data forecast's mean July adjustment is
+−0.355 percentage points versus June persistence.
+
+Combining these local checks gives a weighted proxy of **4.074700**, versus
+**4.118597** before the changes. This is not a predicted public score. The
+submission pipeline retains the exact **3.919** submission as its baseline
+(SHA-256 `4240f71287234337409daa8c027804048424e3eb3644853534d8713b18456ed8`),
+blends the selected v2 property model only for unseen ZIPs, and uses the
+v2 monthly-change predictions for seen ZIPs. No v3, TabICL or boosting model
+is used.
+
+Reproduce with `python -m benchmarks.v2_improve` and
+`python -m benchmarks.v2_seen_drift`, then generate the selected full-data
+candidate with `python -m benchmarks.v2_improve --predict-test`. Raw reports
+and OOF predictions are saved in `docs/benchmarks/v2_improve*` and
+`docs/benchmarks/v2_seen_drift*`. Kaggle runs:
+[unseen-ZIP variations](https://www.kaggle.com/code/atomstack001/housing-v2-focused-improvements),
+[seen-ZIP monthly changes](https://www.kaggle.com/code/atomstack001/housing-v2-seen-drift),
+[full-data prediction](https://www.kaggle.com/code/atomstack001/housing-v2-improved-submission).

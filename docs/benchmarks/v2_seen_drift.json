@@ -1,0 +1,36 @@
+{
+  "model": "TabPFN v2",
+  "estimators": 4,
+  "fold_seed": 42,
+  "scope": "May-to-June ZIP cross-validation; temporal transfer to July is unverified",
+  "folds": {},
+  "persistence_rmse": 1.2524061760739718,
+  "constant_drift_rmse": 1.2058913687962731,
+  "choices": [
+    {
+      "weight": 0.0,
+      "rmse": 1.2058913687962731
+    },
+    {
+      "weight": 0.25,
+      "rmse": 1.1816794627900753
+    },
+    {
+      "weight": 0.5,
+      "rmse": 1.1639370432806309
+    },
+    {
+      "weight": 0.75,
+      "rmse": 1.1529628540653079
+    },
+    {
+      "weight": 1.0,
+      "rmse": 1.1489473042042155
+    }
+  ],
+  "selected": {
+    "weight": 1.0,
+    "rmse": 1.1489473042042155
+  },
+  "complete": true
+}
