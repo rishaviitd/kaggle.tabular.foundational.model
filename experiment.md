@@ -570,3 +570,22 @@ Reproduce with `python -m benchmarks.tabpfn_accuracy_cv`. The
 record every fold and checkpoint hashes. Both pooled and fold-specific scores
 were independently recomputed from the saved predictions, with ZIP identities,
 fold assignments and target labels checked against the original training data.
+
+### TabPFN v3 four-estimator submission
+
+Refitted the evaluated v3 configuration on all **13,660 labeled rows / 6,830
+ZIPs**, using the exact checkpoint SHA-256 from the paired accuracy run. The
+8,534-row submission used latest-known targets for 6,830 seen ZIPs and v3
+predictions for 1,704 unseen ZIPs. No models or predictions were blended.
+
+Kaggle submission **57952579** scored **4.826**, versus the existing v2 best
+of **3.919**. The 1.94% pooled local RMSE improvement did not translate into a
+public leaderboard improvement. Keep v2 as the best public submission; these
+results do not establish why the local/public rankings differ. Both submissions
+use external ACS, Zillow and Realtor.com features.
+
+Reproduce the full-data prediction file with
+`python -m benchmarks.tabpfn_accuracy_cv --predict-test`. The
+[completed prediction notebook](https://www.kaggle.com/code/atomstack001/housing-tabpfn-v3-submission)
+and [verified submission record](docs/benchmarks/tabpfn_v3_submission.json)
+record the training counts, checkpoint/submission hashes and public score.

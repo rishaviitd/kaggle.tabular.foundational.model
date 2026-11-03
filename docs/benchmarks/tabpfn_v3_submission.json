@@ -1,0 +1,27 @@
+{
+  "training_rows": 13660,
+  "training_zips": 6830,
+  "submission_rows": 8534,
+  "seen_zips": 6830,
+  "new_zips": 1704,
+  "estimators": 4,
+  "random_state": 42,
+  "package_version": "9.2.0",
+  "checkpoint_sha256": "311ce18d97e9533d8585eaadafe040fbdd8070533209ed8696641dadc97a7301",
+  "submission_sha256": "ba6115a1cfb549a3aadd669173e1a885aa2ef1053890f9fdace33a574f7db112",
+  "pooled_local_rmse": 4.741548855167853,
+  "external_data": "Census ACS, Zillow and Realtor.com Economic Research",
+  "kaggle": {
+    "ref": 57952579,
+    "total_bytes": "140902",
+    "date": "2026-11-03T15:30:24.503Z",
+    "description": "TabPFN v3 default regression checkpoint, four estimators, seed42; paired five-fold local new-ZIP RMSE 4.74155. Refit on all 13,660 labeled rows / 6,830 ZIPs; latest-target persistence for seen ZIPs. Uses external Census ACS, Zillow and Realtor.com Economic Research features.",
+    "file_name": "submission_tabpfn_v3.csv",
+    "public_score": "4.826",
+    "status": "COMPLETE",
+    "submitted_by": "atomstack001",
+    "submitted_by_ref": "atomstack001",
+    "team_name": "RISHAV KUMAR",
+    "url": "/submissions/57952579/57952579.raw"
+  }
+}
