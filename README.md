@@ -16,6 +16,12 @@ and Realtor.com Economic Research features. The tuned three-model blend scored
 set. Both submissions use external data and are not eligible under the
 competition rules. See [experiment.md](experiment.md) for the full history.
 
+![XGBoost CPU versus optimized TabPFN: accuracy and inference speed](docs/assets/model-tradeoff.png)
+
+[Comparison details and measurement conditions](docs/model-comparison.md).
+XGBoost has no recorded public submission; local RMSE provides the matched
+accuracy comparison. CPU latency and throughput use different batching windows.
+
 ## Install
 
 Use Python 3.10 or newer with a CUDA-enabled PyTorch environment for GPU runs:
