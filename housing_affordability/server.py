@@ -76,7 +76,9 @@ def main():
     parser.add_argument('--port', type=int, default=8000)
     parser.add_argument('--cache', action='store_true')
     parser.add_argument('--batch-window-ms', type=float, default=0,
-                        help='Enable optional tabctx request coalescing with this window')
+                        help='Enable request batching with this window')
+    parser.add_argument('--batch-strategy', choices=('queued', 'tabctx'), default='queued',
+                        help='Choose queued batching or the optional tabctx coalescer')
     args = parser.parse_args()
     if args.batch_window_ms < 0:
         parser.error('--batch-window-ms must not be negative')
@@ -84,8 +86,9 @@ def main():
     history = pd.read_csv(ROOT/'data/train.csv', dtype={'Zip': str})
     service = HousingService(history, cache=args.cache)
     if args.batch_window_ms:
-        from housing_affordability.batching import BatchedHousingService
-        service = BatchedHousingService(service, window_ms=args.batch_window_ms)
+        from housing_affordability.batching import BatchedHousingService, QueuedHousingService
+        strategy = QueuedHousingService if args.batch_strategy == 'queued' else BatchedHousingService
+        service = strategy(service, window_ms=args.batch_window_ms)
 
     print(f'Listening on http://{args.host}:{args.port}', flush=True)
     server_type = BatchedHTTPServer if args.batch_window_ms else HTTPServer

@@ -51,12 +51,13 @@ cache; check the measured T4 memory and prediction agreement before using it.
 For the tested setup, `python -m housing_affordability.server --cache` enables the faster
 configuration. The default remains the exact submission-equivalent path.
 
-For experimental concurrent request coalescing, install `pip install -e
-'.[batching]'` on Python 3.12 or newer and add `--batch-window-ms 20` to the
-cached server command. Compatible requests arriving within the window are
-combined for model inference. GPU access is serialized; this is request
-micro-batching rather than token-level continuous batching. The threaded
-research server has no backpressure or production admission controls.
+For experimental concurrent request coalescing, add `--batch-window-ms 80`
+to the cached server command. A single worker collects compatible requests,
+including arrivals while the GPU is busy. GPU access is serialized; this is
+request micro-batching rather than token-level continuous batching. The threaded
+research server has no backpressure or production admission controls. To use
+the older tabctx coalescer, install `pip install -e '.[batching]'` on Python
+3.12 or newer and add `--batch-strategy tabctx`.
 
 ## Single-T4 measurements
 
@@ -162,6 +163,16 @@ window, using preprocessed inputs and excluding HTTP. The two workloads are
 not directly comparable. A [model-mode sweep](https://www.kaggle.com/code/atomstack001/housing-tabpfn-t4-mode-sweep)
 found forced float16 failed with NaNs, while float32 was much slower than the
 default automatic precision. Raw results are in `docs/benchmarks/`.
+
+In a [follow-up HTTP run](https://www.kaggle.com/code/atomstack001/housing-http-queued-batching),
+the queued worker with an 80 ms window reached **108.7 requests/second** at
+128 concurrent clients, versus **27.3** for the tabctx coalescer with a 20 ms
+window in the same run. Average p95 latency was **1.14 seconds** versus
+**4.65 seconds**. These figures average two short localhost bursts; they do
+not establish sustained performance or a maximum. The two windows differ,
+and the longer window can increase latency at low traffic. Across the run,
+predictions differed from the uncached submission by at most **0.0467
+percentage points**; this is not a labeled accuracy evaluation.
 
 ## Interpretability
 

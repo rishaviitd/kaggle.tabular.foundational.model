@@ -37,9 +37,8 @@ in `data/`, then download the external feature sources using the commands in
 housing-affordability-server --cache
 ```
 
-For experimental request batching, use Python 3.12 or newer, install
-`pip install -e '.[batching]'`, and run
-`housing-affordability-server --cache --batch-window-ms 20`.
+For experimental request batching, run
+`housing-affordability-server --cache --batch-window-ms 80`.
 
 The server accepts `POST /predict` requests containing ZIP-level records. It
 uses the latest known target for seen ZIPs and the fitted model for unseen ZIPs.

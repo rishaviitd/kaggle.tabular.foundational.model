@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import torch
 
-from housing_affordability.batching import BatchedHousingService
+from housing_affordability.batching import BatchedHousingService, QueuedHousingService
 from housing_affordability.features import ROOT
 from housing_affordability.server import BatchedHTTPServer, HousingService, create_handler
 
@@ -60,9 +60,10 @@ def main():
     service = HousingService(train, cache=True)
     report = {'device': torch.cuda.get_device_name(0),
               'scope': 'localhost HTTP, cached model, includes JSON parsing and feature preparation', 'runs': {}}
-    for mode in ['serial', 'batched_5ms', 'batched_20ms']:
-        window = 20 if mode == 'batched_20ms' else 5
-        wrapped = service if mode == 'serial' else BatchedHousingService(service, window_ms=window)
+    for mode in ['batched_20ms', 'queued_20ms', 'queued_80ms']:
+        window = 80 if mode == 'queued_80ms' else 20
+        wrapped = (QueuedHousingService(service, window_ms=window) if mode.startswith('queued')
+                   else BatchedHousingService(service, window_ms=window))
         kind = QueuedHTTPServer if mode == 'serial' else BatchedHTTPServer
         class QuietHandler(create_handler(wrapped)):
             def log_message(self, format, *args):
@@ -74,7 +75,7 @@ def main():
             # Warm up before timing each mode.
             load_burst(server.server_port, rows[:1], 1)
             report['runs'][mode] = {}
-            levels = [1, 8, 32] if mode == 'serial' else [1, 8, 32, 64, 128, 256]
+            levels = [1, 32, 64, 128, 256]
             for clients in levels:
                 count = max(32, clients)
                 trials = []
@@ -88,7 +89,7 @@ def main():
             server.shutdown()
             server.server_close()
             thread.join(timeout=5)
-    out = ROOT/'artifacts/serving/batched_http.json'
+    out = ROOT/'artifacts/serving/queued_http.json'
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=2)+'\n')
     print('HTTP_BENCHMARK', json.dumps(report), flush=True)
