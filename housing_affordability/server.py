@@ -1,4 +1,4 @@
-"""Single-worker HTTP service for the best public-score TabPFN model."""
+"""Single-worker HTTP service for the benchmarked TabPFN v2 model."""
 import argparse
 import json
 import socket

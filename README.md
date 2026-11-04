@@ -16,10 +16,15 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Model](https://img.shields.io/badge/Model-TabPFN%20v2-00A98F)](https://github.com/PriorLabs/TabPFN)
-[![Kaggle](https://img.shields.io/badge/Kaggle-public%20score%203.919-20BEFF?logo=kaggle&logoColor=white)](experiment.md)
+[![Kaggle](https://img.shields.io/badge/Kaggle-public%20score%203.859-20BEFF?logo=kaggle&logoColor=white)](experiment.md)
 
 [Install](#install) · [Serve predictions](#serve-predictions) · [Interpret](#interpret-predictions) · [Benchmarks](docs/serving.md)
 
+**Best public score: 3.859**, using TabPFN v2 with property-type features and
+monthly-change forecasts for seen ZIPs. [Experiment and reproduction details](experiment.md#focused-v2-improvements-from-the-3919-submission).
+
+The graphic and HTTP service describe the original v2 benchmark configuration,
+which scored 3.919; the latest research pipeline has not been speed-benchmarked.
 The graphic's local RMSE is the average across two ZIP-held-out splits.
 [Measurement details](docs/model-comparison.md) explain batching settings,
 model file sizes and validation. Public scores use external data and are

@@ -637,3 +637,14 @@ and OOF predictions are saved in `docs/benchmarks/v2_improve*` and
 [unseen-ZIP variations](https://www.kaggle.com/code/atomstack001/housing-v2-focused-improvements),
 [seen-ZIP monthly changes](https://www.kaggle.com/code/atomstack001/housing-v2-seen-drift),
 [full-data prediction](https://www.kaggle.com/code/atomstack001/housing-v2-improved-submission).
+
+The full-data candidate was submitted as **57954979** and scored **3.859**
+publicly, beating the requested **3.89** target and the previous **3.919** best.
+Its file contains all 8,534 test keys, with model training using all 13,660
+labeled observations across 6,830 ZIPs. Submission SHA-256 is
+`1a4e2fad5ed4b9ababfa7532238afea43f5d0f252626df23a12e27e86b4c2b7a`.
+The [verified submission record](docs/benchmarks/v2_improved_submission.json)
+contains the public score, configuration, counts and hashes. External-data
+eligibility limitations still apply. This is the best research submission;
+the README graphic and shipped HTTP service remain the original measured v2
+configuration, whose speed does not measure this new multi-path pipeline.

@@ -1,5 +1,11 @@
 # Accuracy and inference speed
 
+The graphic describes the original serving benchmark. A subsequent v2-only
+research pipeline scored **3.859** publicly using property-type features and
+seen-ZIP monthly-change forecasts. Its inference performance has not yet been
+measured, so its score is not paired with the older timing numbers. See the
+[experiment record](../experiment.md#focused-v2-improvements-from-the-3919-submission).
+
 ![XGBoost CPU versus TabPFN on one T4](assets/model-tradeoff.png)
 
 Tuned XGBoost serves requests faster on CPU. TabPFN retains lower prediction

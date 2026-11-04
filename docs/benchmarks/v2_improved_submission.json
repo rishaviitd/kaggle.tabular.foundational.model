@@ -1,0 +1,37 @@
+{
+  "training_rows": 13660,
+  "training_zips": 6830,
+  "rows": 8534,
+  "seen": 6830,
+  "new": 1704,
+  "selected": {
+    "variant": "property_types",
+    "weight": 0.5,
+    "rmse": 4.806138489328236,
+    "fold_wins": 4
+  },
+  "model": "TabPFN v2 only",
+  "baseline_submission_sha256": "4240f71287234337409daa8c027804048424e3eb3644853534d8713b18456ed8",
+  "submission_sha256": "1a4e2fad5ed4b9ababfa7532238afea43f5d0f252626df23a12e27e86b4c2b7a",
+  "seen_strategy": "v2-predicted monthly change, selected on May-to-June ZIP CV",
+  "external_data": "ACS, Zillow and Realtor.com Economic Research",
+  "kaggle": {
+    "ref": 57954979,
+    "total_bytes": "231794",
+    "date": "2026-11-03T17:03:35.497Z",
+    "description": "TabPFN v2 only. New ZIPs: 50% original v2 + 50% property-type feature v2, selected on five-fold ZIP CV (RMSE 4.8061 vs 4.8351) with seed137 confirmation. Seen ZIPs: v2 monthly-change forecast (OOF RMSE 1.1489 vs persistence 1.2524). Full-data fit, 13,660 rows / 6,830 ZIPs. Uses external ACS, Zillow and Realtor.com Economic Research data.",
+    "file_name": "submission_v2_improved.csv",
+    "public_score": "3.859",
+    "status": "COMPLETE",
+    "submitted_by": "atomstack001",
+    "submitted_by_ref": "atomstack001",
+    "team_name": "RISHAV KUMAR",
+    "url": "/submissions/57954979/57954979.raw"
+  },
+  "validation": {
+    "new_zip_rmse": 4.806138489328236,
+    "seen_zip_rmse": 1.1489473042042155,
+    "weighted_proxy": 4.074700252303432,
+    "target_public_score": 3.89
+  }
+}
